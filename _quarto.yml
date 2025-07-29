@@ -1,0 +1,38 @@
+project:
+  type: website
+  render:
+    - "index.qmd"
+    - "data-overview.qmd"
+    - "policy-briefs/"
+  resources: 
+    - "images/"
+    - "pdfs/"
+website:
+  favicon: images/favicon.ico
+  open-graph: 
+    image: images/ccp-image-card.png
+  search: false
+  title: "Local Gun Violence"
+  navbar:
+    right:
+      - href: https://communitypartnerships.github.io/data-resources/
+        text: Charlottesville Regional Data Resources
+        icon: box-arrow-up-right
+        target: _blank
+  page-footer:
+    background: light
+    left: |
+      [![](/images/uva-ccp-color.png){fig-alt="Center for Community Partnerships at UVA" width=320px }](https://communitypartnerships.virginia.edu/)
+    right:
+      - href: index.qmd
+        text: "Local Gun Violence Home"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+execute:
+  freeze: auto
+

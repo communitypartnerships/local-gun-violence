@@ -1,0 +1,88 @@
+---
+title: "Gun Violence in Charlottesville & Albemarle"
+listing:
+  - id: overview
+    type: default
+    sort: false
+    image-placeholder: images/ccp-grid-image.png
+    fields: [image, title, description, categories]
+    image-align: left
+    date-format: "MMMM YYYY"
+    contents:
+      - path: "data-overview.qmd"
+        image: images/data_descriptions.png
+        description: "This document brings together multiple sources of data so that we are better able to understand the multifaceted challenges posed by gun violence in our region."
+        categories: [Data Overview]
+  - id: policy-brief
+    type: grid
+    grid-columns: 2
+    sort: false
+    image-placeholder: images/ccp-grid-image.png
+    fields: [image, title, description, categories, date]
+    date-format: "YYYY"
+    contents:
+      - path: "policy-briefs/community-gun-violence.qmd"
+        title: "The Problem of Community Gun Violence"
+        image: images/children_ezeamos.jpg
+        description: "Healthy communities thrive when all members experience physical and psychological safety. Gun violence increasingly threatens the health of our communities — particularly for youth and young adults."
+        date: "Fall 2024"
+        date-format: "[Fall] YYYY"
+        categories: [Policy Brief]
+      - path: "policy-briefs/unintentional-shootings.qmd"
+        title: "The Problem of Unintentional Shootings"
+        image: images/gunsafe.jpg
+        description: "Unintentional shootings, sometimes called accidental shootings, occur when someone is struck by a bullet that wasn’t fired at them on purpose."
+        date: "Fall 2024"
+        date-format: "[Fall] YYYY"
+        categories: [Policy Brief]
+      - path: "policy-briefs/officer-involved-shootings.qmd"
+        title: "The Problem of Officer-Involved Shootings"
+        image: images/police1.jpg
+        description: "Officer-involved shootings refer to incidents where a law enforcement officer discharges a firearm during an encounter with civilians, resulting in injury or fatality."
+        date: "Spring 2025"
+        date-format: "[Spring] YYYY"
+        categories: [Policy Brief]
+      - path: "policy-briefs/suicide-and-firearms.qmd"
+        title: "The Problem of Suicide and Firearms"
+        image: images/holding_hands.jpg
+        description: "Having access to a firearm increases one’s chance of dying by suicide threefold, meaning that those who own or have access to a gun are especially at risk."
+        date: "Spring 2025"
+        date-format: "[Spring] YYYY"
+        categories: [Policy Brief]
+      - path: "policy-briefs/intimate-partner-violence.qmd"
+        title: "The Problem of Intimate Partner Violence and Firearms"
+        image: images/sad_bear.jpg
+        description: "Intimate Partner Violence (IPV) is defined as physical, sexual, or psychological abuse and intimidation of a person by a current or former partner/spouse, whether or not the partner resides in the home. IPV and gun violence are deeply connected issues in the United States."
+        date: "Spring 2025"
+        date-format: "[Spring] YYYY"
+        categories: [Policy Brief]
+execute:
+  cache: true
+  echo: false
+  message: false
+  warning: false
+format: 
+  html:
+    toc: false
+    link-external-newwindow: true
+    grid:
+      body-width: 950px
+---
+
+::: {style="font-size: 1.1em; padding-bottom:1em;"} 
+
+The information below aims to describe the nature, scope, and dimensions of the problem of gun violence locally. Part of the [Gun Violence Solutions Project](https://gvsp.virginia.edu/), this research emphasizes community-driven partnerships to develop a shared understanding and greater clarity, identify knowledge and data gaps, and facilitate wider community engagement in conversations about solutions. 
+:::
+
+::: {#overview}
+:::
+
+## Policy Briefs
+
+::: {#policy-brief}
+:::
+
+::: {style="font-size: 1.1rem; padding-top:1em;"} 
+This project is a collaboration between the [Center for Community Partnerships](https://communitypartnerships.virginia.edu) and [Frank Batten School of Leadership and Public Policy](https://batten.virginia.edu/). 
+
+:::

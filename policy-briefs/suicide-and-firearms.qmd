@@ -1,0 +1,16 @@
+---
+title: "Policy Brief: The Problem of Suicide and Firearms"
+date: "Spring 2025"
+date-format: "[Spring] YYYY"
+format: 
+  html:
+    html-table-processing: none
+    embed-resources: true
+    toc: true
+    link-external-newwindow: true
+execute:
+  cache: false
+  echo: false
+  message: false
+  warning: false
+---
