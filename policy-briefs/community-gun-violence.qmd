@@ -14,10 +14,38 @@ execute:
   message: false
   warning: false
 ---
+```{css, echo=FALSE}
+p.caption {
+  font-size: 0.8em;
+}
+p.comment {
+background-color: #d8e6ef;
+padding: 10px;
+margin-left: 25px;
+border-radius: 5px;
+}
+.shadowbox {
+    background-color: #ffe8ce;
+    border-radius: 10px;
+    border: 2px solid #5faddf;
+    color: black;
+    font-family: "Times New Roman", serif;
+    font-style: italic;
+    /*font-weight: bold;*/
+    text-align: left;
+    /*max-width: 700px;*/
+    padding: 10px;
+    margin: 0 auto 10px auto;
+  }
+  
+.shadowbox p {
+  margin-bottom: 0;
+}
+```
 
 Healthy communities thrive when all members experience physical and psychological safety. Gun violence increasingly threatens the health of our communities — particularly for youth and young adults. The greater Charlottesville community has seen an increase in gun violence, threatening the health of individual residents and our communal life. The impacts of gun violence are not confined to those directly involved in violent incidents; the impacts reverberate throughout the community, eroding the collective health of the larger community.
 
-```{r out.width='70%', fig.align='center'}
+```{r out.width='70%', fig.align='center', fig.alt="Image with text, 48,204 people died from firearms in the U.S. the second-highest total ever recorded. Someone was killed by a gun every 11 minutes."}
 knitr::include_graphics('../images/jhu_firearm_deaths.png')
 ```
 
@@ -50,7 +78,7 @@ While gun violence garners more attention in large urban centers, its presence e
 
 [^7]: Marc A Zimmerman, Patrick Carter and Rebecca Cunningham. 2019. [Who Gun Violence Affects The Most In America, By The Numbers](https://newsone.com/3884930/gun-violence-victims-statistics/). NewsOne. 
 
-```{r fig.align='center', fig.cap="Figure Source: JHU[^8]"}
+```{r fig.align='center', fig.cap="Figure Source: JHU[^8]", fig.alt="Chart showing Difference in Gun Homicide Rats by Race and Age, 2022."}
 knitr::include_graphics('../images/jhu_homicide_agerace.png')
 ```
 
@@ -135,7 +163,7 @@ context of structural disadvantage](https://journals.sagepub.com/doi/abs/10.1177
 
 **What do we know about community gun violence in the Charlottesville City and Albemarle County region?**
 
-```{r}
+```{r, fig.alt="Chart showing Gun Death Rate per 100,000 for youth (ages 1-19) by Urbanization in 2022."}
 knitr::include_graphics('../images/jhu_urban_rural.png')
 ```
 

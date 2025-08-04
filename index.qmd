@@ -11,6 +11,7 @@ listing:
     contents:
       - path: "data-overview.qmd"
         image: images/data_descriptions.png
+        image-alt: "The state of gun violence in Charlottesville and Albamarle image card."
         description: "This document brings together multiple sources of data so that we are better able to understand the multifaceted challenges posed by gun violence in our region."
         categories: [Data Overview]
   - id: policy-brief
@@ -24,6 +25,7 @@ listing:
       - path: "policy-briefs/community-gun-violence.qmd"
         title: "The Problem of Community Gun Violence"
         image: images/children_ezeamos.jpg
+        image-alt: "Photo of children in circle with hands raised."
         description: "Healthy communities thrive when all members experience physical and psychological safety. Gun violence increasingly threatens the health of our communities — particularly for youth and young adults."
         date: "Fall 2024"
         date-format: "[Fall] YYYY"
@@ -31,6 +33,7 @@ listing:
       - path: "policy-briefs/unintentional-shootings.qmd"
         title: "The Problem of Unintentional Shootings"
         image: images/gunsafe.jpg
+        image-alt: "Photo of a gun safe with finger typing in code."
         description: "Unintentional shootings, sometimes called accidental shootings, occur when someone is struck by a bullet that wasn’t fired at them on purpose."
         date: "Fall 2024"
         date-format: "[Fall] YYYY"
@@ -38,6 +41,7 @@ listing:
       - path: "policy-briefs/officer-involved-shootings.qmd"
         title: "The Problem of Officer-Involved Shootings"
         image: images/police1.jpg
+        image-alt: "Photo of close-up of police office in police vest."
         description: "Officer-involved shootings refer to incidents where a law enforcement officer discharges a firearm during an encounter with civilians, resulting in injury or fatality."
         date: "Spring 2025"
         date-format: "[Spring] YYYY"
@@ -45,6 +49,7 @@ listing:
       - path: "policy-briefs/suicide-and-firearms.qmd"
         title: "The Problem of Suicide and Firearms"
         image: images/holding_hands.jpg
+        image-alt: "Photo of arms holding hands."
         description: "Having access to a firearm increases one’s chance of dying by suicide threefold, meaning that those who own or have access to a gun are especially at risk."
         date: "Spring 2025"
         date-format: "[Spring] YYYY"
@@ -52,6 +57,7 @@ listing:
       - path: "policy-briefs/intimate-partner-violence.qmd"
         title: "The Problem of Intimate Partner Violence and Firearms"
         image: images/sad_bear.jpg
+        image-alt: "Photo of a stuffed teddy bear sitting on floor."
         description: "Intimate Partner Violence (IPV) is defined as physical, sexual, or psychological abuse and intimidation of a person by a current or former partner/spouse, whether or not the partner resides in the home. IPV and gun violence are deeply connected issues in the United States."
         date: "Spring 2025"
         date-format: "[Spring] YYYY"
