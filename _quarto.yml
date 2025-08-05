@@ -5,6 +5,7 @@ project:
     - "data-overview.qmd"
     - "policy-briefs/"
     - "!cville-alb-gun-trauma/"
+    - "!data/"
   resources: 
     - "images/"
     - "pdfs/"

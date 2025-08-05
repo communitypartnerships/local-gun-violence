@@ -73,62 +73,62 @@ Charlottesville and Albemarle are not immune to the epidemic of gun violence. Th
 The harm of gun violence takes many forms – deaths and injuries are the most obvious, but the collective trauma of hearing or witnessing gunshots also erodes community safety. This report aims to clarify current knowledge, as well as knowledge gaps, to support community solutions. Each source of data tells a part of the story, and by bringing these sources together we hope to tell a broader story about the nature, shape, and impacts of gun violence in our community. The broader goal is to expand and support the voices in our community working to identify solutions.
 
 ```{r collective_toll, fig.cap="Incidents of Gun Violence in Charlottesville & Albemarle and Number of Victims by Month"}
-# gva <- read_csv("data/raw/gva_incidents_24.csv") %>%
-#   clean_names() %>%
-#   mutate(incident_date = mdy(incident_date)) %>%
-#   select(-operations)
-# 
-# gva$month_year <- floor_date(gva$incident_date, unit = "month")
-# 
-# gv <- read_csv("data/regional_gv.csv") %>%
-#   mutate(reported_date = ymd(as.Date(reported_date)))
-# 
-# gv$month_year <- floor_date(gv$reported_date, unit = "month")
-# 
-# gva_plt <- gva %>%
-#   filter(between(incident_date, mdy("12-31-2017"), mdy("12-31-2024"))) %>%
-#   group_by(month_year) %>%
-#   summarise(total_injured = sum(victims_injured + suspects_injured),
-#             total_killed = sum(victims_killed + suspects_killed)) %>%
-#   ungroup() %>%
-#   pivot_longer(matches("total"))
-# 
-# gv_plt <- gv %>%
-#   group_by(month_year) %>% 
-#   summarise(count=n())
-# 
-# ggplot() +
-#   geom_col(data = gva_plt, aes(x = month_year, y = value, fill = name), width = 25) +
-#   stat_smooth(data = gv_plt, aes(x = month_year, y = count), se = FALSE, span = .2, color = "#2f9aa0ff") +
-#   labs(x = NULL,
-#        y = "Monthly Counts",
-#       title = "Incidents of Gun Violence in Charlottesville & Albemarle and Number of Victims by Month",
-#        caption = "Data Source: Gun Violence Archive (Victim Statuses) & Local Police Reports (Incident Counts") +
-#   scale_y_continuous(breaks = c(2, 4, 6, 8, 10, 12, 14, 16, 18)) +
-#   scale_x_date(date_breaks = "6 months", date_labels = "%b '%y", date_minor_breaks="1 month") +
-#   scale_fill_manual(labels = c("Injured", "Killed"),
-#                        values = c("#440154FF", "#7AD151FF"),
-#                        guide = guide_legend(title = "Victim Status")) +
-#   theme_minimal() +
-#   theme(legend.position = "bottom",
-#         axis.title.y = element_text(face = "bold"),
-#         legend.title = element_text(face = "bold"),
-#         axis.text.x = element_text(angle = 35),
-#         panel.grid.major.x = element_line(size = 1.5)) +
-#   annotate("label", x = mdy("11-1-2018"), y = 5.5, 
-#            label = paste("Gun-related 911 calls\n(ex. shots fired or assaults)"),
-#            size = 3) +
-#   geom_segment(aes(x = mdy("7-1-2018"), y = 6.7, xend = mdy("12-20-2018"), yend = 7.8),
-#                arrow = arrow(length = unit(0.20, "cm"))) +
-#   geom_vline(xintercept = mdy("3-12-2020"), linetype = "dotted", size = 0.75) +
-#   annotate("label", x = mdy("11-15-2020"), y = 9, label = "COVID lockdown", size = 3) +
-#   geom_segment(aes(x = mdy("7-1-2020"), y = 9.6, xend = mdy("4-1-2020"), yend = 10.5),
-#                arrow = arrow(length = unit(0.2, "cm"))) +
-#   annotate("label", x = mdy("2-15-2022"), y = 19, label = paste(
-#     "Hearing or witnessing gun violence takes\na collective toll on our entire community"),
-#     size = 3) +
-#   geom_segment(aes(x = mdy("11-15-2020"), y = 19, xend = mdy("7-15-2020"), yend = 17.9),
-#     arrow = arrow(length = unit(0.2, "cm")))
+gva <- read_csv("data/gva_incidents_24.csv") %>%
+  clean_names() %>%
+  mutate(incident_date = mdy(incident_date)) %>%
+  select(-operations)
+
+gva$month_year <- floor_date(gva$incident_date, unit = "month")
+
+gv <- read_csv("data/regional_gv.csv") %>%
+  mutate(reported_date = ymd(as.Date(reported_date)))
+
+gv$month_year <- floor_date(gv$reported_date, unit = "month")
+
+gva_plt <- gva %>%
+  filter(between(incident_date, mdy("12-31-2017"), mdy("12-31-2024"))) %>%
+  group_by(month_year) %>%
+  summarise(total_injured = sum(victims_injured + suspects_injured),
+            total_killed = sum(victims_killed + suspects_killed)) %>%
+  ungroup() %>%
+  pivot_longer(matches("total"))
+
+gv_plt <- gv %>%
+  group_by(month_year) %>%
+  summarise(count=n())
+
+ggplot() +
+  geom_col(data = gva_plt, aes(x = month_year, y = value, fill = name), width = 25) +
+  stat_smooth(data = gv_plt, aes(x = month_year, y = count), se = FALSE, span = .2, color = "#2f9aa0ff") +
+  labs(x = NULL,
+       y = "Monthly Counts",
+      title = "Incidents of Gun Violence in Charlottesville & Albemarle and Number of Victims by Month",
+       caption = "Data Source: Gun Violence Archive (Victim Statuses) & Local Police Reports (Incident Counts") +
+  scale_y_continuous(breaks = c(2, 4, 6, 8, 10, 12, 14, 16, 18)) +
+  scale_x_date(date_breaks = "6 months", date_labels = "%b '%y", date_minor_breaks="1 month") +
+  scale_fill_manual(labels = c("Injured", "Killed"),
+                       values = c("#440154FF", "#7AD151FF"),
+                       guide = guide_legend(title = "Victim Status")) +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        axis.title.y = element_text(face = "bold"),
+        legend.title = element_text(face = "bold"),
+        axis.text.x = element_text(angle = 35),
+        panel.grid.major.x = element_line(size = 1.5)) +
+  annotate("label", x = mdy("11-1-2018"), y = 5.5,
+           label = paste("Gun-related 911 calls\n(ex. shots fired or assaults)"),
+           size = 3) +
+  geom_segment(aes(x = mdy("7-1-2018"), y = 6.7, xend = mdy("12-20-2018"), yend = 7.8),
+               arrow = arrow(length = unit(0.20, "cm"))) +
+  geom_vline(xintercept = mdy("3-12-2020"), linetype = "dotted", size = 0.75) +
+  annotate("label", x = mdy("11-15-2020"), y = 9, label = "COVID lockdown", size = 3) +
+  geom_segment(aes(x = mdy("7-1-2020"), y = 9.6, xend = mdy("4-1-2020"), yend = 10.5),
+               arrow = arrow(length = unit(0.2, "cm"))) +
+  annotate("label", x = mdy("2-15-2022"), y = 19, label = paste(
+    "Hearing or witnessing gun violence takes\na collective toll on our entire community"),
+    size = 3) +
+  geom_segment(aes(x = mdy("11-15-2020"), y = 19, xend = mdy("7-15-2020"), yend = 17.9),
+    arrow = arrow(length = unit(0.2, "cm")))
 ```
 
 <p class="comment"><b> Notable Trends</b> <br> <br> This graph shows the number of victims of gun violence in Charlottesville and Albemarle, by month, and whether they were injured or killed. The height of each bar represents the number of individuals directly harmed. The dark purple bars show the number of people injured, and the green bars shows the number of people that lost their lives each month. The blue line above the bars shows the total number of verified incidents, such as shots fired. Although the number of injuries and deaths varies month-to-month, the number of incidents remains relatively high, especially following COVID in 2020.</p>
@@ -174,30 +174,30 @@ The leading cause of death by [gun violence](#gun-violence) in the Blue Ridge He
 [^6]: Everytown Research & Policy. Firearm Suicide in the United States: Fact Sheet. <https://everytownresearch.org/report/firearm-suicide-in-the-united-states/> Published 8/30/2019 and updated 1/8/2024.
 
 ```{r}
-# vdh_intent <- read_csv("data/vdh_deaths_intent.csv") %>%
-#   rename(intent = intent_of_injury) %>%
-#   mutate(intent = case_when(intent == "Undetermined/legal/war" ~ "Undetermined or \nPolice Intervention",
-#                             intent == "Unintentional" ~ "Accidental",
-#                             TRUE ~ intent))
-# 
-# vdh_parts <- vdh_intent %>%
-#   select(intent, firearm_deaths) %>%
-#   arrange(desc(firearm_deaths)) %>%
-#   mutate(intent_fct = fct_inorder(intent))
-# 
-# vdh_parts %>%
-#   ggplot(aes(label = intent_fct, values = firearm_deaths)) +
-#   geom_pictogram(n_rows = 6, size = 10, aes(colour = intent_fct), flip = FALSE, make_proportional = FALSE) +
-#   scale_color_manual(
-#     values = c("#440154FF", "#FDE725FF", "#7AD151FF", "#2f9aa0ff")) +
-#   scale_label_pictogram(
-#     values = c("male")) +
-#   theme_void() +
-#   theme(legend.position = "bottom",
-#         legend.text = element_text(face = "bold"),
-#         legend.title=element_blank()) +
-  # labs(title= "Firearm Deaths in the Blue Ridge Health District (2018-2022)",
-  #      caption = "Data source: Centers for Disease Control, Underlying Cause of Death 2018-2022")
+vdh_intent <- read_csv("cville-alb-gun-trauma/data/vdh_deaths_intent.csv") %>%
+  rename(intent = intent_of_injury) %>%
+  mutate(intent = case_when(intent == "Undetermined/legal/war" ~ "Undetermined or \nPolice Intervention",
+                            intent == "Unintentional" ~ "Accidental",
+                            TRUE ~ intent))
+
+vdh_parts <- vdh_intent %>%
+  select(intent, firearm_deaths) %>%
+  arrange(desc(firearm_deaths)) %>%
+  mutate(intent_fct = fct_inorder(intent))
+
+vdh_parts %>%
+  ggplot(aes(label = intent_fct, values = firearm_deaths)) +
+  geom_pictogram(n_rows = 6, size = 10, aes(colour = intent_fct), flip = FALSE, make_proportional = FALSE) +
+  scale_color_manual(
+    values = c("#440154FF", "#FDE725FF", "#7AD151FF", "#2f9aa0ff")) +
+  scale_label_pictogram(
+    values = c("male")) +
+  theme_void() +
+  theme(legend.position = "bottom",
+        legend.text = element_text(face = "bold"),
+        legend.title=element_blank()) +
+labs(title= "Firearm Deaths in the Blue Ridge Health District (2018-2022)",
+     caption = "Data source: Centers for Disease Control, Underlying Cause of Death 2018-2022")
 ```
 
 <p class="comment"><b> Notable Trends</b> <br> <br> The visualization above represents each individual that lost their lives from gun violence in the Blue Ridge Health District between 2018 and 2022, color coded by their cause of death. Of the 141 total lives lost, 107 (or 76%) were by suicide, 31 were homicide, 2 were undetermined or by police intervention, and 1 was accidental. The Blue Ridge Health District includes Charlottesville City, and the counties of Albemarle, Greene, Louisa, Fluvanna, and Nelson. Homicide – community violence, domestic violence, mass shootings, and other intentional violence – accounts for 22% of all deaths. Of all 141 firearm-related deaths between this time period, 68 (48%) were in Charlottesville or Albemarle[^7].</p>
@@ -216,48 +216,48 @@ The [Virginia Department of Health](https://www.vdh.virginia.gov/surveillance-an
 The bar chart on the left shows the number of firearm-related emergency department visits in Charlottesville and Albemarle over time and the bar chart on the right shows the rate of firearm-related emergency department visits per 10,000 emergency department visits over time. The two peaks, 2020 and 2023, are highlighted.
 
 ```{r vdh_injuries_plt}
-# vdh_injuries <- read_csv("data/vdh_injury_county.csv") %>%
-#   clean_names() %>%
-#   mutate(yr = ymd(year, truncated = 2L))
-# 
-# vdh_labs <- vdh_injuries %>%
-#   select(yr, firearm_injury_visits, rate_of_firearm_injuries_per_10k_ed_visits) %>%
-#   pivot_longer(
-#     cols = c(rate_of_firearm_injuries_per_10k_ed_visits, firearm_injury_visits))
-# 
-# facet_labs <- c(
-#   firearm_injury_visits = "Firearm Injury Visits to the Emergency Room",
-#   rate_of_firearm_injuries_per_10k_ed_visits = "Rate of Firearm Injury Visits\nper 10k Emergency Room Visits",
-#   total_ed_visits = "Total ED Visits"
-# )
-# 
-# vdh_long <- vdh_injuries %>%
-#   pivot_longer(
-#     cols = c(firearm_injury_visits, rate_of_firearm_injuries_per_10k_ed_visits))
-# 
-# vdh_long %>%
-#   ggplot(aes(x = yr, y = value, fill = factor(yr))) +
-#   geom_col() +
-#   geom_text(data = vdh_labs, aes(label = value), vjust = -.5, size = 3) +
-#   facet_wrap(~name, scales = "free_y", labeller = as_labeller(facet_labs)) +
-#   theme_bw() +
-#   theme(axis.text.x = element_text(angle = 35),
-#         strip.text.x = element_text(face = "bold")) +
-#   scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
-#   labs(x = "",
-#        y = "",
-#        caption = "Data Source: Virginia Department of Health Firearm-Related ED Visits") +
-#   scale_fill_manual(values = c("2015-01-01" = "#007BAB",
-#                                "2016-01-01" = "#007BAB",
-#                                "2017-01-01" = "#007BAB",
-#                                "2018-01-01" = "#007BAB",
-#                                "2019-01-01" = "#007BAB",
-#                                "2020-01-01" = "#F8BE3D",
-#                                "2021-01-01" = "#007BAB",
-#                                "2022-01-01" = "#007BAB",
-#                                "2023-01-01" = "#F8BE3D",
-#                                "2024-01-01" = "#007BAB"),
-#                     guide = "none")
+vdh_injuries <- read_csv("cville-alb-gun-trauma/data/vdh_injury_county.csv") %>%
+  clean_names() %>%
+  mutate(yr = ymd(year, truncated = 2L))
+
+vdh_labs <- vdh_injuries %>%
+  select(yr, firearm_injury_visits, rate_of_firearm_injuries_per_10k_ed_visits) %>%
+  pivot_longer(
+    cols = c(rate_of_firearm_injuries_per_10k_ed_visits, firearm_injury_visits))
+
+facet_labs <- c(
+  firearm_injury_visits = "Firearm Injury Visits to the Emergency Room",
+  rate_of_firearm_injuries_per_10k_ed_visits = "Rate of Firearm Injury Visits\nper 10k Emergency Room Visits",
+  total_ed_visits = "Total ED Visits"
+)
+
+vdh_long <- vdh_injuries %>%
+  pivot_longer(
+    cols = c(firearm_injury_visits, rate_of_firearm_injuries_per_10k_ed_visits))
+
+vdh_long %>%
+  ggplot(aes(x = yr, y = value, fill = factor(yr))) +
+  geom_col() +
+  geom_text(data = vdh_labs, aes(label = value), vjust = -.5, size = 3) +
+  facet_wrap(~name, scales = "free_y", labeller = as_labeller(facet_labs)) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 35),
+        strip.text.x = element_text(face = "bold")) +
+  scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
+  labs(x = "",
+       y = "",
+       caption = "Data Source: Virginia Department of Health Firearm-Related ED Visits") +
+  scale_fill_manual(values = c("2015-01-01" = "#007BAB",
+                               "2016-01-01" = "#007BAB",
+                               "2017-01-01" = "#007BAB",
+                               "2018-01-01" = "#007BAB",
+                               "2019-01-01" = "#007BAB",
+                               "2020-01-01" = "#F8BE3D",
+                               "2021-01-01" = "#007BAB",
+                               "2022-01-01" = "#007BAB",
+                               "2023-01-01" = "#F8BE3D",
+                               "2024-01-01" = "#007BAB"),
+                    guide = "none")
 ```
 
 <p class="comment"><b> Notable Trends</b> <br> <br> In 2020, the rate of firearm injuries peaked at 8.3, with 29 firearm injuries among 34,875 emergency department visits. However, 2020 also had the lowest number of emergency department visits which aligns with national trends of decreased emergency department use during the COVID-19 pandemic[^8]. After falling in 2021, the firearm injury rate began trending upward. The year with the most number of firearm-related emergency room visits was 2023, with 35 visits, and the year with the most number of overall emergency room visits was 2024, with 55,578 visits.</p>
@@ -269,34 +269,34 @@ The bar chart on the left shows the number of firearm-related emergency departme
 The table below shows the exact number of emergency department visits in Charlottesville and Albemarle compared to firearm-related visits over time.
 
 ```{r vdh_injuries_tbl}
-# vdh_injuries <- read_csv("data/vdh_injury_county.csv")
-# 
-# names(vdh_injuries) <- gsub("_", " ", names(vdh_injuries)) %>%
-#   str_to_title() %>%
-#   gsub("Ed", "ED", .)
-# 
-# vdh_injuries %>%
-#   select(-`Patient City County`) %>%
-#   mutate(Locality = "Charlottesville & Albemarle") %>%
-#   arrange(Year) %>%
-#   reactable(
-#     defaultColDef = colDef(
-#       align = "center",
-#       headerStyle = list(background = "#f7f7f8"),
-#       minWidth = 50
-#     ),
-#     columns = list(
-#       "Total ED Visits" = colDef(format = colFormat(separators = TRUE)),
-#       "Rate Of Firearm Injuries Per 10k ED Visits" = colDef(style = color_scales(
-#         vdh_injuries, colors = orange_pal)),
-#       Locality = colDef(minWidth = 100)
-#     ),
-#     bordered = TRUE,
-#     highlight = TRUE
-#   ) %>%
-#   add_source("Data Source: Virginia Department of Health Firearm-Related ED Visits",
-#              align = "right",
-#              font_size = 11)
+vdh_injuries <- read_csv("cville-alb-gun-trauma/data/vdh_injury_county.csv")
+
+names(vdh_injuries) <- gsub("_", " ", names(vdh_injuries)) %>%
+  str_to_title() %>%
+  gsub("Ed", "ED", .)
+
+vdh_injuries %>%
+  select(-`Patient City County`) %>%
+  mutate(Locality = "Charlottesville & Albemarle") %>%
+  arrange(Year) %>%
+  reactable(
+    defaultColDef = colDef(
+      align = "center",
+      headerStyle = list(background = "#f7f7f8"),
+      minWidth = 50
+    ),
+    columns = list(
+      "Total ED Visits" = colDef(format = colFormat(separators = TRUE)),
+      "Rate Of Firearm Injuries Per 10k ED Visits" = colDef(style = color_scales(
+        vdh_injuries, colors = orange_pal)),
+      Locality = colDef(minWidth = 100)
+    ),
+    bordered = TRUE,
+    highlight = TRUE
+  ) %>%
+  add_source("Data Source: Virginia Department of Health Firearm-Related ED Visits",
+             align = "right",
+             font_size = 11)
 ```
 
 <details>
@@ -323,35 +323,35 @@ The [Virginia Department of Health](https://www.vdh.virginia.gov/firearm-injury/
 The bar chart on the left shows the number of firearm-related deaths in the Blue Ridge Health District between 2018-2022, and the bar chart on the right shows the rate of firearm-related deaths per 100,000 people in that age group.
 
 ```{r vdh_age_plt}
-# vdh_deaths_age <- read_csv("data/vdh_deaths_age.csv") %>%
-#   mutate(age_group = gsub('.{6}$', '', age_group))
-# 
-# vdh_deaths_labs <- vdh_deaths_age %>%
-#   select(age_group, firearm_deaths, rate_of_firearm_deaths_per_100k_pop) %>%
-#   pivot_longer(
-#     cols = c(rate_of_firearm_deaths_per_100k_pop, firearm_deaths))
-# 
-# deaths_facet_labs <- c(
-#   firearm_deaths = "Firearm Deaths",
-#   rate_of_firearm_deaths_per_100k_pop = "Rate of Firearm Deaths\nper 100k People")
-# 
-# vdh_deaths_age_long <- vdh_deaths_age %>%
-#   pivot_longer(
-#     cols = c(firearm_deaths, rate_of_firearm_deaths_per_100k_pop)) %>%
-#   mutate(age_group = gsub('.{6}$', '', age_group))
-#   
-# vdh_deaths_age_long %>%
-#   ggplot(aes(x = age_group, y = value)) +
-#   geom_col(fill = "#007BAB") +
-#   geom_text(data = vdh_deaths_labs, aes(label = value), vjust = -.5, size = 3) +
-#   facet_wrap(~name, labeller = as_labeller(deaths_facet_labs)) +
-#   theme_bw() +
-#   theme(axis.text.x = element_text(angle = 35),
-#         axis.title.x = element_text(face = "bold"),
-#         strip.text.x = element_text(face = "bold")) +
-#   labs(x = "Age Group",
-#        y = "",
-#        caption = "Data Source: Virginia Department of Health Firearm-Related ED Visits")
+vdh_deaths_age <- read_csv("cville-alb-gun-trauma/data/vdh_deaths_age.csv") %>%
+  mutate(age_group = gsub('.{6}$', '', age_group))
+
+vdh_deaths_labs <- vdh_deaths_age %>%
+  select(age_group, firearm_deaths, rate_of_firearm_deaths_per_100k_pop) %>%
+  pivot_longer(
+    cols = c(rate_of_firearm_deaths_per_100k_pop, firearm_deaths))
+
+deaths_facet_labs <- c(
+  firearm_deaths = "Firearm Deaths",
+  rate_of_firearm_deaths_per_100k_pop = "Rate of Firearm Deaths\nper 100k People")
+
+vdh_deaths_age_long <- vdh_deaths_age %>%
+  pivot_longer(
+    cols = c(firearm_deaths, rate_of_firearm_deaths_per_100k_pop)) %>%
+  mutate(age_group = gsub('.{6}$', '', age_group))
+
+vdh_deaths_age_long %>%
+  ggplot(aes(x = age_group, y = value)) +
+  geom_col(fill = "#007BAB") +
+  geom_text(data = vdh_deaths_labs, aes(label = value), vjust = -.5, size = 3) +
+  facet_wrap(~name, labeller = as_labeller(deaths_facet_labs)) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 35),
+        axis.title.x = element_text(face = "bold"),
+        strip.text.x = element_text(face = "bold")) +
+  labs(x = "Age Group",
+       y = "",
+       caption = "Data Source: Virginia Department of Health Firearm-Related ED Visits")
 ```
 
 <p class="comment"><b> Notable Trends</b> <br> <br> The plot above shows that the rate of firearm death is highest for individuals aged 18 and 19 years old, with a rate of 18.3 based on 8 confirmed firearm-related deaths between 2018 and 2022 in the Blue Ridge Health District. A rate of 18.3 means that for every 100,000 people aged 18-19 living in the region, 18 individuals would have lost their lives to gun violence. While there are fewer than 100,000 residents aged 18-19, the rate helps compare risk of gun-related deaths across age ranges. <br> <br> The rate above 14 per 100k individuals for all ages between 18 and 44 years old. The age group with the second-highest percentage of gun-related deaths are individuals above the age of 75, with 16 deaths per 100,000 people. Given that suicide is the number one cause of firearm-related death in our region, we assume that a majority of the deaths for individuals 75 and older were suicide.</p>
@@ -362,25 +362,25 @@ The bar chart on the left shows the number of firearm-related deaths in the Blue
 The table below shows the exact numbers of firearm-related deaths in the Blue Ridge Health District between 2018-2022.
 
 ```{r vdh_age}
-# vdh_deaths_age <- read_csv("data/vdh_deaths_age.csv")
-# 
-# vdh_deaths_age %>%
-#   arrange(age_group) %>%
-#   reactable(
-#     defaultColDef = colDef(
-#       header = function(value) str_to_title(gsub("_", " ", value, fixed = TRUE)),
-#       align = "center",
-#       defaultSortOrder = "desc",
-#       headerStyle = list(background = "#f7f7f8")),
-#     columns = list(
-#       rate_of_firearm_deaths_per_100k_pop = colDef(style = color_scales(vdh_deaths_age, colors = orange_pal)
-#         )),
-#     bordered = TRUE,
-#     highlight = TRUE,
-#     defaultPageSize = 11) %>%
-#   add_source("Data Source: Virginia Department of Health Firearm-Related ED Visits",
-#              align = "right", 
-#              font_size = 11)
+vdh_deaths_age <- read_csv("cville-alb-gun-trauma/data/vdh_deaths_age.csv")
+
+vdh_deaths_age %>%
+  arrange(age_group) %>%
+  reactable(
+    defaultColDef = colDef(
+      header = function(value) str_to_title(gsub("_", " ", value, fixed = TRUE)),
+      align = "center",
+      defaultSortOrder = "desc",
+      headerStyle = list(background = "#f7f7f8")),
+    columns = list(
+      rate_of_firearm_deaths_per_100k_pop = colDef(style = color_scales(vdh_deaths_age, colors = orange_pal)
+        )),
+    bordered = TRUE,
+    highlight = TRUE,
+    defaultPageSize = 11) %>%
+  add_source("Data Source: Virginia Department of Health Firearm-Related ED Visits",
+             align = "right",
+             font_size = 11)
 ```
 
 <details>
@@ -399,31 +399,29 @@ VDH reports the number and rate of firearm-related deaths among Virginia residen
 ## Incidents of Gun Violence
 
 ```{r gva_read}
-# #Incidents in Cville/Albemarle
-# gva_incidents <- read_csv("data/gva_incidents.csv") %>%
-#   mutate(incident_date = mdy(incident_date)) %>%
-#   select(-operations) %>%
-#   filter(incident_date <= "2024-12-31")
-# 
-# #Participants in Cville/Albemarle
-# gva_participants <- read_csv("data/gva_participants.csv") %>%
-#   mutate(incident_date = ymd(incident_date)) %>%
-#   filter(incident_date <= "2024-12-31")
-# 
-# #Incidents in Virginia
-# gva_incidents_va <- read_csv("data/gva_incidents_virginia.csv") %>%
-#   select(-incident_id, -incident_date) %>%
-#   filter(date <= "2024-12-31")
-# 
-# #Participants in Virginia
-# gva_participants_va <- read_csv("data/gva_participants_virginia.csv") %>%
-#   filter(date <= "2024-12-31")
+#Incidents in Cville/Albemarle
+gva_incidents <- read_csv("cville-alb-gun-trauma/data/gva_incidents.csv") %>%
+  mutate(incident_date = mdy(incident_date)) %>%
+  select(-operations) %>%
+  filter(incident_date <= "2024-12-31")
 
-# Add text back to doc later ----
-# The [Gun Violence Archive](https://www.gunviolencearchive.org/) curates a database of incidents of gun violence and gun crime, sourced from local and state police, media, data aggregates, and government. The database includes information about `r nrow(gva_incidents)` incidents of gun violence affecting `r nrow(gva_participants)` participants in the Charlottesville/Albemarle region from May 17th 2014 - December 31st 2024 along with `r nrow(gva_incidents_va)` incidents affecting `r nrow(gva_participants_va)` in Virginia from January 1st 2015 - December 31st 2024 . An individual may be involved in more than one incident (see [incidents](#incident) vs. [crimes](#crime)). Incidents range from shots fired reports, to unlawful gun ownership, to acts of violence such as assault and homicide. The Gun Violence Archive does not include information about suicides.
+#Participants in Cville/Albemarle
+gva_participants <- read_csv("cville-alb-gun-trauma/data/gva_participants.csv") %>%
+  mutate(incident_date = ymd(incident_date)) %>%
+  filter(incident_date <= "2024-12-31")
+
+#Incidents in Virginia
+gva_incidents_va <- read_csv("cville-alb-gun-trauma/data/gva_incidents_virginia.csv") %>%
+  select(-incident_id, -incident_date) %>%
+  filter(date <= "2024-12-31")
+
+#Participants in Virginia
+gva_participants_va <- read_csv("cville-alb-gun-trauma/data/gva_participants_virginia.csv") %>%
+  filter(date <= "2024-12-31")
+
 ```
 
-
+The [Gun Violence Archive](https://www.gunviolencearchive.org/) curates a database of incidents of gun violence and gun crime, sourced from local and state police, media, data aggregates, and government. The database includes information about `r nrow(gva_incidents)` incidents of gun violence affecting `r nrow(gva_participants)` participants in the Charlottesville/Albemarle region from May 17th 2014 - December 31st 2024 along with `r nrow(gva_incidents_va)` incidents affecting `r nrow(gva_participants_va)` in Virginia from January 1st 2015 - December 31st 2024 . An individual may be involved in more than one incident (see [incidents](#incident) vs. [crimes](#crime)). Incidents range from shots fired reports, to unlawful gun ownership, to acts of violence such as assault and homicide. The Gun Violence Archive does not include information about suicides.
 
 The data includes four datasets: one has information about each incident and the associated outcomes (for example, the number of people injured and/or killed), and the other lists [participant](#participant)-level information (for example, the age range and gender of both victims and suspects) for the Charlottesville and Albemarle region along with the entire Virginia Commonwealth. All include the approximate location and date of each incident along with characteristics such the number of injuries, and the nature of the gun incident.
 
@@ -431,27 +429,27 @@ The data includes four datasets: one has information about each incident and the
 ### Incidents in Charlottesville
 
 ```{r gva_incidents_local}
-# gva_incidents %>%
-#   group_by(yr = year(incident_date)) %>%
-#   summarise(total_injured = sum(victims_injured + suspects_injured),
-#             total_killed = sum(victims_killed + suspects_killed)) %>%
-#   ungroup() %>%
-#   pivot_longer(matches("total")) %>% 
-#   ggplot(aes(x = yr, y = value, fill = name)) +
-#   geom_col() +
-#   labs(x = "Year",
-#        y = "Number of Victims",
-#        title = "Victims of Gun Violence in the Charlottesville/Albemarle Region",
-#        caption = "Data Source: Gun Violence Archive") +
-#   scale_fill_manual(labels = c("Injured", "Killed"),
-#                     values = c("#F8BE3D", "#007BAB"),
-#                     guide = guide_legend(title = "Victim Status")) +
-#   scale_x_continuous(breaks = scales::pretty_breaks(n = 11),
-#                      guide = guide_axis(angle = 35)) +
-#   theme_minimal() +
-#   theme(axis.title.x = element_text(face = "bold"),
-#         axis.title.y = element_text(face = "bold"),
-#         legend.title = element_text(face = "bold"))
+gva_incidents %>%
+  group_by(yr = year(incident_date)) %>%
+  summarise(total_injured = sum(victims_injured + suspects_injured),
+            total_killed = sum(victims_killed + suspects_killed)) %>%
+  ungroup() %>%
+  pivot_longer(matches("total")) %>%
+  ggplot(aes(x = yr, y = value, fill = name)) +
+  geom_col() +
+  labs(x = "Year",
+       y = "Number of Victims",
+       title = "Victims of Gun Violence in the Charlottesville/Albemarle Region",
+       caption = "Data Source: Gun Violence Archive") +
+  scale_fill_manual(labels = c("Injured", "Killed"),
+                    values = c("#F8BE3D", "#007BAB"),
+                    guide = guide_legend(title = "Victim Status")) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 11),
+                     guide = guide_axis(angle = 35)) +
+  theme_minimal() +
+  theme(axis.title.x = element_text(face = "bold"),
+        axis.title.y = element_text(face = "bold"),
+        legend.title = element_text(face = "bold"))
 ```
 
 <p class="comment"><b> Notable Trends</b> <br> <br> The bar graph above shows that the number of victims both injured and killed in incidents of gun violence have increased tenfold from 3 in 2014 to 33 in 2022. 2022 had the highest number of victims injured, with 24 individuals reported being shot, while 2023 was the deadliest year, with 12 individuals losing their lives to gun violence. While 2024 only includes data through April, so far the numbers are trending lower than in previous years.</p>
@@ -460,93 +458,93 @@ The data includes four datasets: one has information about each incident and the
 ### Incidents in Virginia
 
 ```{r gva_incidents_va}
-# gva_incidents_va %>%
-#   group_by(yr = year(date)) %>%
-#   summarise(total_injured = sum(victims_injured + suspects_injured),
-#             total_killed = sum(victims_killed + suspects_killed)) %>%
-#   ungroup() %>%
-#   pivot_longer(matches("total")) %>% 
-#   ggplot(aes(x = yr, y = value, fill = name)) +
-#   geom_col() +
-#   labs(x = "Year",
-#        y = "Number of Victims",
-#        title = "Victims of Gun Violence in Virginia",
-#        caption = "Data Source: Gun Violence Archive") +
-#   scale_fill_manual(labels = c("Injured", "Killed"),
-#                     values = c("#F8BE3D", "#007BAB"),
-#                     guide = guide_legend(title = "Victim Status")) +
-#   scale_x_continuous(breaks = scales::pretty_breaks(n = 11),
-#                      guide = guide_axis(angle = 35)) +
-#   theme_minimal() +
-#   theme(axis.title.x = element_text(face = "bold"),
-#         axis.title.y = element_text(face = "bold"),
-#         legend.title = element_text(face = "bold"))
+gva_incidents_va %>%
+  group_by(yr = year(date)) %>%
+  summarise(total_injured = sum(victims_injured + suspects_injured),
+            total_killed = sum(victims_killed + suspects_killed)) %>%
+  ungroup() %>%
+  pivot_longer(matches("total")) %>%
+  ggplot(aes(x = yr, y = value, fill = name)) +
+  geom_col() +
+  labs(x = "Year",
+       y = "Number of Victims",
+       title = "Victims of Gun Violence in Virginia",
+       caption = "Data Source: Gun Violence Archive") +
+  scale_fill_manual(labels = c("Injured", "Killed"),
+                    values = c("#F8BE3D", "#007BAB"),
+                    guide = guide_legend(title = "Victim Status")) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 11),
+                     guide = guide_axis(angle = 35)) +
+  theme_minimal() +
+  theme(axis.title.x = element_text(face = "bold"),
+        axis.title.y = element_text(face = "bold"),
+        legend.title = element_text(face = "bold"))
 ```
 ::: 
 
 ## Ages of Individuals Involved
 
 ```{r gva_participants_cville, fig.cap="Ages of Individuals Involved in Gun Violence in the Charlottesville/Albemarle Region"}
-# gva_participants <- read_csv("data/gva_participants.csv") %>%
-#   drop_na(age) %>%
-#   mutate(role = str_to_title(role),
-#          role = case_when(
-#            role == "Suspect" ~ "Defendant",
-#            TRUE ~ role),
-#          age_grp = case_when(
-#            age <= 9 ~ "0-9",
-#            age > 9 & age <= 14 ~ "10-14", 
-#            age > 14 & age <= 17 ~ "15-17",
-#            age > 17 & age <= 19 ~ "18-19",
-#            age > 19 & age <= 24 ~ "20-24",
-#            age > 24 & age <= 30 ~ "25-30",
-#            age > 30 & age <= 35 ~ "31-35",
-#            age > 35 & age <= 45 ~ "36-45",
-#            age > 45 & age <= 55 ~ "46-55",
-#            age > 55 & age <= 65 ~ "56-65",
-#            age > 65 & age <= 75 ~ "66-75",
-#            age > 75 ~ "76+"))
-# 
-# age_dat <- gva_participants %>%
-#   group_by(role, age_grp) %>%
-#   count() %>%
-#   group_by(role) %>%
-#   mutate(n_tot = ifelse(role == 'Defendant', -n / sum(n), n / sum(n)),
-#          n_plt = ifelse(role == 'Defendant', -n, n))
-# 
-# pretty_symmetric <- function(range, n = 7){
-#   range_1 <- c(-range[1], range[2])
-#   range_2 <- c(range[1], -range[2])
-#   pretty_vec_1 <- pretty(range_1)
-#   pretty_vec_2 <- pretty(range_2)
-#   pretty(
-#     c(pretty_vec_1, pretty_vec_2), 
-#     n = n)}
-# 
-# pct_range <- range(age_dat$n_tot)
-# pct_range_seq <- pretty_symmetric(pct_range, n = 7)
-# 
-# ggplot(age_dat, aes(n_tot, age_grp, fill = role)) +
-#   geom_col() +
-#   geom_text(aes(x = n_tot, y = age_grp, label = scales::percent(round(abs(n_tot), 2))), 
-#             hjust = ifelse(age_dat$n_tot < 0, 1, -.1)) +
-#   geom_vline(xintercept = 0) +
-#   annotate("label", x = -.2, y = "76+", label = "Total Defendants: 115", 
-#            fill = "#2f9aa0ff", color = "white", fontface = 2) +
-#   annotate("label", x = .2, y = "76+", label = "Total Victims: 81", 
-#            fill = "#B12A90FF", color = "white", fontface = 2) +
-#   labs(y = "Age Range",
-#        x = "Percent of Defendants                                                       Percent of Victims",
-#        title = "Ages of Individuals Involved in Gun Violence in the Charlottesville/Albemarle Region",
-#        caption = "Data Source: Gun Violence Archive") +
-#   theme_minimal() +
-#   scale_x_continuous(breaks = pct_range_seq,
-#                      labels = scales::percent(abs(pct_range_seq))) +
-#   expand_limits(x = range(pct_range_seq)) +
-#   theme(legend.position = "none",
-#         axis.title.x = element_text(face = "bold"),
-#         axis.title.y = element_text(face = "bold")) +
-#   scale_fill_manual(values = c("#2f9aa0ff", "#B12A90FF"))
+gva_participants <- read_csv("cville-alb-gun-trauma/data/gva_participants.csv") %>%
+  drop_na(age) %>%
+  mutate(role = str_to_title(role),
+         role = case_when(
+           role == "Suspect" ~ "Defendant",
+           TRUE ~ role),
+         age_grp = case_when(
+           age <= 9 ~ "0-9",
+           age > 9 & age <= 14 ~ "10-14",
+           age > 14 & age <= 17 ~ "15-17",
+           age > 17 & age <= 19 ~ "18-19",
+           age > 19 & age <= 24 ~ "20-24",
+           age > 24 & age <= 30 ~ "25-30",
+           age > 30 & age <= 35 ~ "31-35",
+           age > 35 & age <= 45 ~ "36-45",
+           age > 45 & age <= 55 ~ "46-55",
+           age > 55 & age <= 65 ~ "56-65",
+           age > 65 & age <= 75 ~ "66-75",
+           age > 75 ~ "76+"))
+
+age_dat <- gva_participants %>%
+  group_by(role, age_grp) %>%
+  count() %>%
+  group_by(role) %>%
+  mutate(n_tot = ifelse(role == 'Defendant', -n / sum(n), n / sum(n)),
+         n_plt = ifelse(role == 'Defendant', -n, n))
+
+pretty_symmetric <- function(range, n = 7){
+  range_1 <- c(-range[1], range[2])
+  range_2 <- c(range[1], -range[2])
+  pretty_vec_1 <- pretty(range_1)
+  pretty_vec_2 <- pretty(range_2)
+  pretty(
+    c(pretty_vec_1, pretty_vec_2),
+    n = n)}
+
+pct_range <- range(age_dat$n_tot)
+pct_range_seq <- pretty_symmetric(pct_range, n = 7)
+
+ggplot(age_dat, aes(n_tot, age_grp, fill = role)) +
+  geom_col() +
+  geom_text(aes(x = n_tot, y = age_grp, label = scales::percent(round(abs(n_tot), 2))),
+            hjust = ifelse(age_dat$n_tot < 0, 1, -.1)) +
+  geom_vline(xintercept = 0) +
+  annotate("label", x = -.2, y = "76+", label = "Total Defendants: 115",
+           fill = "#2f9aa0ff", color = "white", fontface = 2) +
+  annotate("label", x = .2, y = "76+", label = "Total Victims: 81",
+           fill = "#B12A90FF", color = "white", fontface = 2) +
+  labs(y = "Age Range",
+       x = "Percent of Defendants                                                       Percent of Victims",
+       title = "Ages of Individuals Involved in Gun Violence in the Charlottesville/Albemarle Region",
+       caption = "Data Source: Gun Violence Archive") +
+  theme_minimal() +
+  scale_x_continuous(breaks = pct_range_seq,
+                     labels = scales::percent(abs(pct_range_seq))) +
+  expand_limits(x = range(pct_range_seq)) +
+  theme(legend.position = "none",
+        axis.title.x = element_text(face = "bold"),
+        axis.title.y = element_text(face = "bold")) +
+  scale_fill_manual(values = c("#2f9aa0ff", "#B12A90FF"))
 ```
 
 <p class="comment"><b> Notable Trends</b> <br> <br> The bar graph above shows the percentage of those involved with gun violence by age over the last 10 years. The width of each bar represents the approximate percentage of each role by age group. The teal bars on the left show the age ranges of defendants and the purple bars on the right show the age ranges of the victims of gun violence. The width of each bar represents the approximate percentage. Between 2014 to 2024, there were 115 defendants and 81 victims reported. Of the defendants, 29% were between the ages of 20-24, while 19% of the victims were.</p>
@@ -596,48 +594,48 @@ Death counts less than 10 are suppressed by the CDC so that individuals cannot b
 The table below shows the number of suicides in Charlottesville and Albemarle between 2018 to 2023 and the estimated rates per 100,000 people.
 
 ```{r suicide_region}
-# cdc_deaths_intent <- read_csv("data/cdc_deaths_intent.csv")
-# 
-# suicides_local <- cdc_deaths_intent %>%
-#   filter(injury_intent == "Suicide",
-#          locality == "Charlottesville city, VA" |
-#            locality == "Albemarle County, VA") %>%
-#   mutate(locality = word(.$locality, 1)) %>%
-#   select(-injury_intent) %>%
-#   rename(suicides = deaths)
-# 
-# # CDC suppression values make estimating crude rates impossible, so we're going to estimate a range of values instead
-# cville_rate_estimate <- data_frame(suicides_estimated = c(1, 5, 9),
-#            estimate = c("low", "med", "high"), 
-#            locality = "Charlottesville") %>%
-#   inner_join(suicides_local) %>%
-#   mutate(estimated_crude_rate = round((suicides_estimated/pop_6yr) * 1e5, 1)) %>%
-#   filter(estimate %in% c("low", "high")) %>%
-#   select(estimated_crude_rate) %>%
-#   with(paste(estimated_crude_rate, collapse = "-"))
-#   
-# 
-# suicides_local %>%
-#   mutate(crude_rate = case_when(
-#     crude_rate == "Suppressed" ~ cville_rate_estimate,
-#     TRUE ~ crude_rate)) %>%
-#   reactable(
-#     defaultColDef = colDef(
-#       header = function(value) 
-#         str_to_title(gsub("_", " ", value, fixed = TRUE)),
-#       minWidth = 70,
-#       headerStyle = list(background = "#f7f7f8")
-#     ),
-#     columns = list(
-#       pop_6yr = colDef(name = "Combined 6-Year Population", 
-#                        format = colFormat(separators = TRUE)),
-#       crude_rate = colDef(name = "Estimated Rate per 100k People")
-#     ),
-#     bordered = TRUE,
-#     highlight = TRUE) %>%
-#   add_source("Data Source: Centers for Disease Control",
-#              align = "right",
-#              font_size = 11)
+cdc_deaths_intent <- read_csv("cville-alb-gun-trauma/data/cdc_deaths_intent.csv")
+
+suicides_local <- cdc_deaths_intent %>%
+  filter(injury_intent == "Suicide",
+         locality == "Charlottesville city, VA" |
+           locality == "Albemarle County, VA") %>%
+  mutate(locality = word(.$locality, 1)) %>%
+  select(-injury_intent) %>%
+  rename(suicides = deaths)
+
+# CDC suppression values make estimating crude rates impossible, so we're going to estimate a range of values instead
+cville_rate_estimate <- data_frame(suicides_estimated = c(1, 5, 9),
+           estimate = c("low", "med", "high"),
+           locality = "Charlottesville") %>%
+  inner_join(suicides_local) %>%
+  mutate(estimated_crude_rate = round((suicides_estimated/pop_6yr) * 1e5, 1)) %>%
+  filter(estimate %in% c("low", "high")) %>%
+  select(estimated_crude_rate) %>%
+  with(paste(estimated_crude_rate, collapse = "-"))
+
+
+suicides_local %>%
+  mutate(crude_rate = case_when(
+    crude_rate == "Suppressed" ~ cville_rate_estimate,
+    TRUE ~ crude_rate)) %>%
+  reactable(
+    defaultColDef = colDef(
+      header = function(value)
+        str_to_title(gsub("_", " ", value, fixed = TRUE)),
+      minWidth = 70,
+      headerStyle = list(background = "#f7f7f8")
+    ),
+    columns = list(
+      pop_6yr = colDef(name = "Combined 6-Year Population",
+                       format = colFormat(separators = TRUE)),
+      crude_rate = colDef(name = "Estimated Rate per 100k People")
+    ),
+    bordered = TRUE,
+    highlight = TRUE) %>%
+  add_source("Data Source: Centers for Disease Control",
+             align = "right",
+             font_size = 11)
 ```
 
 <p class="comment"><b> Notable Trends</b> <br> <br>Between 2018 - 2023, there were 55 suicides by firearm in Albemarle County and less than 10 in Charlottesville City. Because the population of Albemarle county is significantly larger, we also look at the rates per one hundred thousand people. In Albemarle, the rate is 8.2 deaths by suicide per 100,000 people, and in Charlottesville the rate is between 0.4 - 3.2. Despite having a larger population, the rate of suicide is still higher in Albemarle than Charlottesville.</p>
@@ -647,63 +645,61 @@ The table below shows the number of suicides in Charlottesville and Albemarle be
 The table below shows a breakdown of age and gender of the 129 suicides by firearm in the Blue Ridge Health District between 2018 - 2023.
 
 ```{r suicide_age}
-# total_suicides_brhd <- cdc_deaths_intent %>%
-#   filter(locality == "Blue Ridge Health District",
-#          injury_intent == "Suicide") 
-# 
-# total_suicides_brhd <- as.numeric(total_suicides_brhd[[3]]) #129
-# 
-# total_suicides_va <- cdc_deaths_intent %>%
-#   filter(locality == "Virginia",
-#          injury_intent == "Suicide") 
-# 
-# total_suicides_va <- as.numeric(total_suicides_va[[3]]) #4199
-# 
-# suicide_age_pcts <- read_csv("data/cdc_suicide_age.csv") %>%
-#   select(-...1) %>%
-#   filter(locality == "Blue Ridge Health District") %>%
-#   mutate(
-#     deaths = case_when(
-#       deaths == "<10" ~ 3, # approximation
-#       TRUE ~ as.numeric(deaths)),
-#     pct = round(((deaths / total_suicides_brhd) * 100), 1)) %>%
-#   select(-deaths)
-# 
-# suicide_age_tbl <- suicide_age_pcts %>%
-#   select(-pop_6yr, -crude_rate) %>%
-#   filter(ten_year_age_groups != "Not Stated") %>%
-#   mutate(ten_year_age_groups = str_sub(.$ten_year_age_groups, end = -7)) %>%
-#   pivot_wider(names_from = ten_year_age_groups,
-#               values_from = pct) %>%
-#   mutate(across(where(is.numeric), ~na_if(., 0)))
-# 
-# suicide_age_tbl %>%
-#   select(locality, sex = gender, "1-4":"85+", date_range) %>%
-#   reactable(
-#     defaultColDef = colDef(
-#       header = function(value) 
-#         str_to_title(gsub("_", " ", value, fixed = TRUE)),
-#       align = "center",
-#       minWidth = 45,
-#       format = colFormat(suffix = "%"),
-#       na = "–",
-#       style = color_scales(data = ., colors = orange_pal, span = 3:12),
-#       headerStyle = list(background = "#f7f7f8")
-#     ),
-#     columns = list(
-#       locality = colDef(minWidth = 60, format = colFormat(suffix = "")),
-#       sex = colDef(minWidth = 55, format = colFormat(suffix = "")),
-#       date_range = colDef(minWidth = 60, format = colFormat(suffix = ""))
-#       ),
-#     bordered = TRUE,
-#     highlight = TRUE
-#   ) %>%
-#   add_source("Data Source: Centers for Disease Control",
-#              align = "right",
-#              font_size = 11)
+total_suicides_brhd <- cdc_deaths_intent %>%
+  filter(locality == "Blue Ridge Health District",
+         injury_intent == "Suicide")
 
-# put back under Suicides by Race and Ethnicity ----
-# The tables below show a breakdown of race, ethnicity, and gender of the `r total_suicides_brhd` suicides by firearm in the Blue Ridge Health District and the `r total_suicides_va` suicides by firearm in Virginia between 2018 - 2023.
+total_suicides_brhd <- as.numeric(total_suicides_brhd[[3]]) #129
+
+total_suicides_va <- cdc_deaths_intent %>%
+  filter(locality == "Virginia",
+         injury_intent == "Suicide")
+
+total_suicides_va <- as.numeric(total_suicides_va[[3]]) #4199
+
+suicide_age_pcts <- read_csv("cville-alb-gun-trauma/data/cdc_suicide_age.csv") %>%
+  select(-...1) %>%
+  filter(locality == "Blue Ridge Health District") %>%
+  mutate(
+    deaths = case_when(
+      deaths == "<10" ~ 3, # approximation
+      TRUE ~ as.numeric(deaths)),
+    pct = round(((deaths / total_suicides_brhd) * 100), 1)) %>%
+  select(-deaths)
+
+suicide_age_tbl <- suicide_age_pcts %>%
+  select(-pop_6yr, -crude_rate) %>%
+  filter(ten_year_age_groups != "Not Stated") %>%
+  mutate(ten_year_age_groups = str_sub(.$ten_year_age_groups, end = -7)) %>%
+  pivot_wider(names_from = ten_year_age_groups,
+              values_from = pct) %>%
+  mutate(across(where(is.numeric), ~na_if(., 0)))
+
+suicide_age_tbl %>%
+  select(locality, sex = gender, "1-4":"85+", date_range) %>%
+  reactable(
+    defaultColDef = colDef(
+      header = function(value)
+        str_to_title(gsub("_", " ", value, fixed = TRUE)),
+      align = "center",
+      minWidth = 45,
+      format = colFormat(suffix = "%"),
+      na = "–",
+      style = color_scales(data = ., colors = orange_pal, span = 3:12),
+      headerStyle = list(background = "#f7f7f8")
+    ),
+    columns = list(
+      locality = colDef(minWidth = 60, format = colFormat(suffix = "")),
+      sex = colDef(minWidth = 55, format = colFormat(suffix = "")),
+      date_range = colDef(minWidth = 60, format = colFormat(suffix = ""))
+      ),
+    bordered = TRUE,
+    highlight = TRUE
+  ) %>%
+  add_source("Data Source: Centers for Disease Control",
+             align = "right",
+             font_size = 11)
+
 ```
 
 <p class="comment"><b> Notable Trends</b> <br> <br>Between 2018 - 2023, approximately 76% of the suicides by firearm were committed by men, with the ages 15-34 and 65-74 making up the largest percent of victims. This information mirrors national trends concerning sex and suicide by firearms[^13].</p>
@@ -713,110 +709,108 @@ The table below shows a breakdown of age and gender of the 129 suicides by firea
 
 ### Suicides by Race and Ethnicity
 
-<!-- Return text here -->
+The tables below show a breakdown of race, ethnicity, and gender of the `r total_suicides_brhd` suicides by firearm in the Blue Ridge Health District and the `r total_suicides_va` suicides by firearm in Virginia between 2018 - 2023.
 
 In the Blue Ridge Health District, the suicide counts for individuals that identify as American Indian or Alaska Native, Native Hawaiian or Other Pacific Islander, multiple races, or other races not listed by the CDC was zero, so they are not included in the first table.
 
 **Percentages of Firearm Suicides in the Blue Ridge Health District by Race, Ethnicity, and Sex**
 
 ```{r suicides_race_brhd}
-# race_brhd <- read_csv("data/acs_race_brhd.csv")
-# 
-# cdc_suicide_race <- read_csv("data/cdc_suicide_race.csv")
-# 
-# suicide_race_brhd_pcts <- cdc_suicide_race %>%
-#   filter(locality == "Blue Ridge Health District",
-#          hispanic_origin != "Not Stated",
-#          ! race %in% c("More than one race", "Not Available", "American Indian or Alaska Native", "Native Hawaiian or Other Pacific Islander")) %>%
-#   mutate(
-#     deaths = case_when(
-#       deaths == "<10" ~ 2, # approximation
-#       TRUE ~ as.numeric(deaths)),
-#     pct = round(((deaths / total_suicides_brhd) * 100), 1)) %>%
-#   select(-deaths)
-# 
-# suicide_race_brhd_tbl <- suicide_race_brhd_pcts %>%
-#   pivot_wider(names_from = race,
-#               values_from = pct) %>%
-#   mutate(across(where(is.numeric), ~na_if(., 0)))
-# 
-# suicide_race_brhd_tbl %>%
-#   select(locality, sex = gender, hispanic_origin, Asian, Black = `Black or African American`, White, date_range) %>%
-#   reactable(
-#     defaultColDef = colDef(
-#       header = function(value) 
-#         str_to_title(gsub("_", " ", value, fixed = TRUE)),
-#       align = "center",
-#       minWidth = 45,
-#       na = "–",
-#       style = color_scales(data = ., colors = orange_pal, span = 4:6),
-#       headerStyle = list(background = "#f7f7f8")
-#     ),
-#     columns = list(
-#       Asian = colDef(minWidth = 40, format = colFormat(suffix = "%")),
-#       Black = colDef(minWidth = 40, format = colFormat(suffix = "%")),
-#       White = colDef(minWidth = 40, format = colFormat(suffix = "%"))
-#       ),
-#     bordered = TRUE,
-#     highlight = TRUE
-#   ) %>%
-#   add_source("Data Source: Centers for Disease Control",
-#              align = "right",
-#              font_size = 11)
+race_brhd <- read_csv("cville-alb-gun-trauma/data/acs_race_brhd.csv")
+
+cdc_suicide_race <- read_csv("cville-alb-gun-trauma/data/cdc_suicide_race.csv")
+
+suicide_race_brhd_pcts <- cdc_suicide_race %>%
+  filter(locality == "Blue Ridge Health District",
+         hispanic_origin != "Not Stated",
+         ! race %in% c("More than one race", "Not Available", "American Indian or Alaska Native", "Native Hawaiian or Other Pacific Islander")) %>%
+  mutate(
+    deaths = case_when(
+      deaths == "<10" ~ 2, # approximation
+      TRUE ~ as.numeric(deaths)),
+    pct = round(((deaths / total_suicides_brhd) * 100), 1)) %>%
+  select(-deaths)
+
+suicide_race_brhd_tbl <- suicide_race_brhd_pcts %>%
+  pivot_wider(names_from = race,
+              values_from = pct) %>%
+  mutate(across(where(is.numeric), ~na_if(., 0)))
+
+suicide_race_brhd_tbl %>%
+  select(locality, sex = gender, hispanic_origin, Asian, Black = `Black or African American`, White, date_range) %>%
+  reactable(
+    defaultColDef = colDef(
+      header = function(value)
+        str_to_title(gsub("_", " ", value, fixed = TRUE)),
+      align = "center",
+      minWidth = 45,
+      na = "–",
+      style = color_scales(data = ., colors = orange_pal, span = 4:6),
+      headerStyle = list(background = "#f7f7f8")
+    ),
+    columns = list(
+      Asian = colDef(minWidth = 40, format = colFormat(suffix = "%")),
+      Black = colDef(minWidth = 40, format = colFormat(suffix = "%")),
+      White = colDef(minWidth = 40, format = colFormat(suffix = "%"))
+      ),
+    bordered = TRUE,
+    highlight = TRUE
+  ) %>%
+  add_source("Data Source: Centers for Disease Control",
+             align = "right",
+             font_size = 11)
 ```
 
 **Percentages of Firearm Suicides in Virginia by Race, Ethnicity, and Sex**
 
 ```{r suicides_race_va}
-# 
-# race_va <- read_csv("data/acs_race_va.csv")
-# 
-# suicide_race_va_pcts <- cdc_suicide_race %>%
-#   filter(locality == "Virginia",
-#          race != "Not Available") %>%
-#   mutate(
-#     deaths = case_when(
-#       deaths == "<10" ~ 3, # approximation
-#       TRUE ~ as.numeric(deaths)),
-#     pct = round(((deaths / total_suicides_va) * 100), 1)) %>%
-#   select(-deaths)
-# 
-# suicide_race_va_tbl <- suicide_race_va_pcts %>%
-#   pivot_wider(names_from = race,
-#               values_from = pct) %>%
-#   mutate(across(where(is.numeric), ~na_if(., 0)))
-# 
-# suicide_race_va_tbl %>%
-#   select(locality, sex = gender, hispanic_origin, `American Indian or Alaska Native`, Asian, Black = `Black or African American`, `Native Hawaiian or Other Pacific Islander`, `More than one race`, White, date_range) %>%
-#   reactable(
-#     defaultColDef = colDef(
-#       header = function(value) 
-#         str_to_title(gsub("_", " ", value, fixed = TRUE)),
-#       align = "center",
-#       minWidth = 60,
-#       format = colFormat(suffix = "%"),
-#       na = "–",
-#       style = color_scales(data = ., colors = orange_pal, span = 4:9),
-#       headerStyle = list(background = "#f7f7f8")
-#     ),
-#     columns = list(
-#       locality = colDef(minWidth = 60, format = colFormat(suffix = "")),
-#       sex = colDef(minWidth = 50, format = colFormat(suffix = "")),
-#       hispanic_origin = colDef(minWidth = 60, format = colFormat(suffix = "")),
-#       date_range = colDef(format = colFormat(suffix = ""))
-#       ),
-#     bordered = TRUE,
-#     highlight = TRUE
-#   ) %>%
-#   add_source("Data Source: Centers for Disease Control",
-#              align = "right",
-#              font_size = 11)
 
-# Add text back to doc later ----
-# <p class="comment"><b>Notable Trends</b> <br> <br>The tables above both highlight the trend of white, non-Hispanic males being the prominent victims of suicide by firearm. In the Blue Ridge Health District, white, non-Hispanic males make up `r round(race_brhd$pct_white_male, 1)`% of the total population, but 80.6% of the total suicides by firearm. In Virginia, the percent of white males males up `r round(race_va$pct_white_male, 1)`% of the total population, but 69.8% of the suicides by firearm. In both of these regions, other demographics that are victims of suicide by firearm are white, non-Hispanic females, and Black non-Hispanic males.</p>
+race_va <- read_csv("cville-alb-gun-trauma/data/acs_race_va.csv")
+
+suicide_race_va_pcts <- cdc_suicide_race %>%
+  filter(locality == "Virginia",
+         race != "Not Available") %>%
+  mutate(
+    deaths = case_when(
+      deaths == "<10" ~ 3, # approximation
+      TRUE ~ as.numeric(deaths)),
+    pct = round(((deaths / total_suicides_va) * 100), 1)) %>%
+  select(-deaths)
+
+suicide_race_va_tbl <- suicide_race_va_pcts %>%
+  pivot_wider(names_from = race,
+              values_from = pct) %>%
+  mutate(across(where(is.numeric), ~na_if(., 0)))
+
+suicide_race_va_tbl %>%
+  select(locality, sex = gender, hispanic_origin, `American Indian or Alaska Native`, Asian, Black = `Black or African American`, `Native Hawaiian or Other Pacific Islander`, `More than one race`, White, date_range) %>%
+  reactable(
+    defaultColDef = colDef(
+      header = function(value)
+        str_to_title(gsub("_", " ", value, fixed = TRUE)),
+      align = "center",
+      minWidth = 60,
+      format = colFormat(suffix = "%"),
+      na = "–",
+      style = color_scales(data = ., colors = orange_pal, span = 4:9),
+      headerStyle = list(background = "#f7f7f8")
+    ),
+    columns = list(
+      locality = colDef(minWidth = 60, format = colFormat(suffix = "")),
+      sex = colDef(minWidth = 50, format = colFormat(suffix = "")),
+      hispanic_origin = colDef(minWidth = 60, format = colFormat(suffix = "")),
+      date_range = colDef(format = colFormat(suffix = ""))
+      ),
+    bordered = TRUE,
+    highlight = TRUE
+  ) %>%
+  add_source("Data Source: Centers for Disease Control",
+             align = "right",
+             font_size = 11)
+
 ```
 
-
+<p class="comment"><b>Notable Trends</b> <br> <br>The tables above both highlight the trend of white, non-Hispanic males being the prominent victims of suicide by firearm. In the Blue Ridge Health District, white, non-Hispanic males make up `r round(race_brhd$pct_white_male, 1)`% of the total population, but 80.6% of the total suicides by firearm. In Virginia, the percent of white males males up `r round(race_va$pct_white_male, 1)`% of the total population, but 69.8% of the suicides by firearm. In both of these regions, other demographics that are victims of suicide by firearm are white, non-Hispanic females, and Black non-Hispanic males.</p>
 
 :::
 
@@ -839,100 +833,98 @@ The tables below show breakdown of sex as it relates to reported incidents of in
 **Victims by Sex of Intimate Violence and Family Violence with a Firearm in Charlottesville and Albemarle**
 
 ```{r domestic_local}
-# domestic_local <- read_csv("data/nibrs_domestic_firearm.csv") %>%
-#   select(-contains("acquaintance")) %>%
-#   filter(locality != "Virginia",
-#          victim_gender != "Unknown", #value is 0 so we remove to remove whitespace
-#          offender_gender != "Unknown")
-# 
-# domestic_local_tbl <- domestic_local %>%
-#   group_by(victim_gender) %>%
-#   summarise(intimate_total = sum(intimate, na.rm = TRUE),
-#             family_total = sum(family, na.rm = TRUE)) %>%
-#   ungroup() %>%
-#   mutate(locality = "Charlottesville & Albemarle",
-#          date_range = "2016-2023")
-# 
-# domestic_local_tbl %>%
-#   reactable(
-#     defaultColDef = colDef(
-#       align = "center",
-#       headerStyle = list(background = "#f7f7f8")
-#     ),
-#     columns = list(
-#       locality = colDef(name = "Locality", minWidth = 70),
-#       victim_gender = colDef(name = "Sex"),
-#       intimate_total = colDef(name = "Number of Victims of Intimate Partner Violence"),
-#       family_total = colDef(name = "Number of Victims of Family Violence"),
-#       date_range = colDef(name = "Date Range")
-#     )
-#   ) %>%
-#   add_source("Data Source: National Incident-Based Reporting System",
-#              align = "right",
-#              font_size = 11)
+domestic_local <- read_csv("cville-alb-gun-trauma/data/nibrs_domestic_firearm.csv") %>%
+  select(-contains("acquaintance")) %>%
+  filter(locality != "Virginia",
+         victim_gender != "Unknown", #value is 0 so we remove to remove whitespace
+         offender_gender != "Unknown")
+
+domestic_local_tbl <- domestic_local %>%
+  group_by(victim_gender) %>%
+  summarise(intimate_total = sum(intimate, na.rm = TRUE),
+            family_total = sum(family, na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(locality = "Charlottesville & Albemarle",
+         date_range = "2016-2023")
+
+domestic_local_tbl %>%
+  reactable(
+    defaultColDef = colDef(
+      align = "center",
+      headerStyle = list(background = "#f7f7f8")
+    ),
+    columns = list(
+      locality = colDef(name = "Locality", minWidth = 70),
+      victim_gender = colDef(name = "Sex"),
+      intimate_total = colDef(name = "Number of Victims of Intimate Partner Violence"),
+      family_total = colDef(name = "Number of Victims of Family Violence"),
+      date_range = colDef(name = "Date Range")
+    )
+  ) %>%
+  add_source("Data Source: National Incident-Based Reporting System",
+             align = "right",
+             font_size = 11)
 ```
 
 **Victims by Sex of Intimate Violence and Family Violence with a Firearm in Virginia**
 
 ```{r domestic_va}
-# domestic_va <- read_csv("data/nibrs_domestic_firearm.csv") %>%
-#   select(-acquaintance) %>%
-#   filter(locality == "Virginia")
-# 
-# domestic_va_tbl <- domestic_va %>%
-#   group_by(victim_gender) %>%
-#   summarise(intimate_total = sum(intimate, na.rm = TRUE),
-#             family_total = sum(family, na.rm = TRUE)) %>%
-#   ungroup() %>%
-#   mutate(locality = "Virginia",
-#          date_range = "2016-2023")
-# 
-# domestic_va_tbl %>%
-#   reactable(
-#     defaultColDef = colDef(
-#       align = "center",
-#       headerStyle = list(background = "#f7f7f8")
-#     ),
-#     columns = list(
-#       locality = colDef(name = "Locality", minWidth = 70),
-#       victim_gender = colDef(name = "Sex"),
-#       intimate_total = colDef(name = "Number of Victims of Intimate Partner Violence"),
-#       family_total = colDef(name = "Number of Victims of Family Violence"),
-#       date_range = colDef(name = "Date Range")
-#     )
-#   ) %>%
-#   add_source("Data Source: National Incident-Based Reporting System",
-#              align = "right",
-#              font_size = 11)
+domestic_va <- read_csv("cville-alb-gun-trauma/data/nibrs_domestic_firearm.csv") %>%
+  select(-acquaintance) %>%
+  filter(locality == "Virginia")
+
+domestic_va_tbl <- domestic_va %>%
+  group_by(victim_gender) %>%
+  summarise(intimate_total = sum(intimate, na.rm = TRUE),
+            family_total = sum(family, na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(locality = "Virginia",
+         date_range = "2016-2023")
+
+domestic_va_tbl %>%
+  reactable(
+    defaultColDef = colDef(
+      align = "center",
+      headerStyle = list(background = "#f7f7f8")
+    ),
+    columns = list(
+      locality = colDef(name = "Locality", minWidth = 70),
+      victim_gender = colDef(name = "Sex"),
+      intimate_total = colDef(name = "Number of Victims of Intimate Partner Violence"),
+      family_total = colDef(name = "Number of Victims of Family Violence"),
+      date_range = colDef(name = "Date Range")
+    )
+  ) %>%
+  add_source("Data Source: National Incident-Based Reporting System",
+             align = "right",
+             font_size = 11)
 ```
 
 ```{r ipv}
-# ipv <- read_csv("data/nibrs_ipv.csv")
-# 
-# ipv %>%
-#   select(locality, yr, weapon, all_offense_types) %>%
-#   pivot_wider(names_from = weapon, values_from = all_offense_types) %>%
-#   clean_names() %>%
-#   rowwise() %>%
-#   mutate(pct_all_ipv = (firearm/all_types_of_weapon_force_involved) * 100) %>%
-#   select(locality, yr, pct_all_ipv) -> pct_all_ipv
-# 
-# ipv %>%
-#   select(locality, yr, weapon, homicide) %>%
-#   pivot_wider(names_from = weapon, values_from = homicide) %>%
-#   clean_names() %>%
-#   rowwise() %>%
-#   mutate(pct_homicide_ipv = (firearm/all_types_of_weapon_force_involved) * 100) %>%
-#   select(locality, yr, pct_homicide_ipv) -> pct_homicide_ipv
-# 
-# ipv_pcts <- pct_all_ipv %>%
-#   left_join(pct_homicide_ipv, by = join_by(locality == locality, yr == yr)) %>%
-#   filter(yr == "2023")
+ipv <- read_csv("cville-alb-gun-trauma/data/nibrs_ipv.csv")
 
-# Put text back in doc ----
-# <p class="comment"><b> Notable Trends</b> <br> <br>The tables above show that in both the Charlottesville and Albemarle regions and Virginia, women are the most common victims of intimate partner violence with a firearm, while men are the most common victims of family violence with a firearm. When a firearm is involved, intimate partner violence is much more deadly. In Virginia, in 2023, `r ipv_pcts %>% filter(locality == "Virginia") %>% select(pct_homicide_ipv) %>% round()`% of homicides from intimate partner violence were committed with a firearm. This information mirrors national trends[^17].</p>
+ipv %>%
+  select(locality, yr, weapon, all_offense_types) %>%
+  pivot_wider(names_from = weapon, values_from = all_offense_types) %>%
+  clean_names() %>%
+  rowwise() %>%
+  mutate(pct_all_ipv = (firearm/all_types_of_weapon_force_involved) * 100) %>%
+  select(locality, yr, pct_all_ipv) -> pct_all_ipv
+
+ipv %>%
+  select(locality, yr, weapon, homicide) %>%
+  pivot_wider(names_from = weapon, values_from = homicide) %>%
+  clean_names() %>%
+  rowwise() %>%
+  mutate(pct_homicide_ipv = (firearm/all_types_of_weapon_force_involved) * 100) %>%
+  select(locality, yr, pct_homicide_ipv) -> pct_homicide_ipv
+
+ipv_pcts <- pct_all_ipv %>%
+  left_join(pct_homicide_ipv, by = join_by(locality == locality, yr == yr)) %>%
+  filter(yr == "2023")
+
 ```
-
+<p class="comment"><b> Notable Trends</b> <br> <br>The tables above show that in both the Charlottesville and Albemarle regions and Virginia, women are the most common victims of intimate partner violence with a firearm, while men are the most common victims of family violence with a firearm. When a firearm is involved, intimate partner violence is much more deadly. In Virginia, in 2023, `r ipv_pcts %>% filter(locality == "Virginia") %>% select(pct_homicide_ipv) %>% round()`% of homicides from intimate partner violence were committed with a firearm. This information mirrors national trends[^17].</p>
 
 
 [^17]: Elizabeth Tobin-Tyler. Intimate Partner Violence, Firearm Injuries and Homicides: A Health Justice Approach to Two Intersecting Public Health Crises. J Law Med Ethics. 2023;51(1):64-76. May 25, 2023. <https://pmc.ncbi.nlm.nih.gov/articles/PMC10209983/>
@@ -942,37 +934,37 @@ The tables below show breakdown of sex as it relates to reported incidents of in
 The data below contains summaries of all [crimes](#crime) where a firearm was used in Virginia, Albemarle County, and Charlottesville City between 2016 - 2023, separated by whether the individuals believed to have committed the crime was an adult or [youth](#youth). For this source, youth are considered to be under the age of 18.
 
 ```{r nibrs_compare}
-# age_labs <- c("Under 18", "Above 18")
-# names(age_labs) <- c("youth_rate_100k", "adult_rate_100k")
-# 
-# firearm_age <- read_csv("data/nibrs_firearm_age.csv")
-# 
-# tmp_plt_dat <- firearm_age %>%
-#   select(locality, yr, matches("rate")) %>%
-#   pivot_longer(cols = c(youth_rate_100k, adult_rate_100k))
-# 
-# ggplot(tmp_plt_dat, aes(yr, value, color = locality, group = locality)) +
-#   geom_line(size = 1.5) +
-#   facet_wrap(~name,
-#              labeller = labeller(name = age_labs),
-#              scales = "free_y") +
-#   labs(x = "Year",
-#        y = "Crime Rate per 100k Population",
-#        caption = "Data Source: National Incident-Based Reporting System") +
-#   scale_color_manual(values = c("#232D4B", "#F8BE3D", "#007BAB"), 
-#                     name = "Region",
-#                     breaks = c("Virginia", "Charlottesville City", "Albemarle County")) +
-#   geom_label(data = filter(tmp_plt_dat, yr == 2023),
-#              aes(label = paste0(round(value, 1))),
-#              show.legend = F, hjust = .75, alpha = 0.75, fontface = "bold") +
-#   scale_x_continuous(breaks = scales::pretty_breaks(n = 8),
-#                      guide = guide_axis(angle = 35)) +
-#   theme_bw() +
-#   theme(axis.title.x = element_text(face = "bold"),
-#         axis.title.y = element_text(face = "bold"),
-#         legend.position = "top",
-#         legend.title = element_text(face = "bold"),
-#         strip.text.x = element_text(face = "bold"))
+age_labs <- c("Under 18", "Above 18")
+names(age_labs) <- c("youth_rate_100k", "adult_rate_100k")
+
+firearm_age <- read_csv("cville-alb-gun-trauma/data/nibrs_firearm_age.csv")
+
+tmp_plt_dat <- firearm_age %>%
+  select(locality, yr, matches("rate")) %>%
+  pivot_longer(cols = c(youth_rate_100k, adult_rate_100k))
+
+ggplot(tmp_plt_dat, aes(yr, value, color = locality, group = locality)) +
+  geom_line(size = 1.5) +
+  facet_wrap(~name,
+             labeller = labeller(name = age_labs),
+             scales = "free_y") +
+  labs(x = "Year",
+       y = "Crime Rate per 100k Population",
+       caption = "Data Source: National Incident-Based Reporting System") +
+  scale_color_manual(values = c("#232D4B", "#F8BE3D", "#007BAB"),
+                    name = "Region",
+                    breaks = c("Virginia", "Charlottesville City", "Albemarle County")) +
+  geom_label(data = filter(tmp_plt_dat, yr == 2023),
+             aes(label = paste0(round(value, 1))),
+             show.legend = F, hjust = .75, alpha = 0.75, fontface = "bold") +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 8),
+                     guide = guide_axis(angle = 35)) +
+  theme_bw() +
+  theme(axis.title.x = element_text(face = "bold"),
+        axis.title.y = element_text(face = "bold"),
+        legend.position = "top",
+        legend.title = element_text(face = "bold"),
+        strip.text.x = element_text(face = "bold"))
 ```
 
 <p class="comment"><b> Notable Trends</b> <br> <br> The figure above shows the rate of gun violence crimes per 100k population over time broken down by participant age. Statewide, the firearm crime rate has been generally increasing: the adult rate increased from 118 crimes per 100k people in 2016 to 168 crimes per 100k people in 2023 and the youth rate increased from 12 crimes per 100k people to 16 crimes per 100k people. These numbers mean that on average, in Virginia in 2023, for every 100k people, there were 168 firearm-related crimes committed by adults and 16 firearm-related crimes committed by individuals under 18. <br> <br> Following the COVID-19 pandemic, crimes involving firearms increased for all age groups, most notably among youth. In Charlottesville, the youth firearm crime rate surpassed state levels in 2022. In 2023, however, both adult and youth firearm crime rates decreased.</p>
@@ -998,49 +990,49 @@ As a result, this is not a definitive collection of public safety data for Charl
 ### Incidents of Gun Violence in Charlottesville & Albemarle
 
 ```{r police_incidents, fig.cap="Incidents of Gun Violence in Charlottesville & Albemarle"}
-# regional_gv <- read_csv("data/regional_gv.csv") %>%
-#   mutate(locality = word(locality, 1),
-#          yr = year(reported_date))
-# 
-# shots_fired <- regional_gv %>%
-#   filter(description == "Shots Fired",
-#          verified == "VERIFIED") %>%
-#   group_by(yr, locality) %>%
-#   count() %>%
-#   rename(shots_fired = n)
-# 
-# other <- regional_gv %>%
-#   filter(description != "Shots Fired",
-#          verified != "UNVERIFIED") %>%
-#   group_by(yr, locality) %>%
-#   count() %>%
-#   rename(other = n)
-# 
-# years <- shots_fired %>%
-#   left_join(other, relationship = "many-to-many") %>%
-#   pivot_longer(cols = c("shots_fired", "other"),
-#                names_to = c("type"),
-#                values_to = "count")
-#   
-# ggplot(years, aes(yr, count, fill = type)) +
-#   geom_col() +
-#   facet_wrap(~locality) +
-#   scale_fill_manual("Incident Type",
-#                     labels = c("Aggravated Assault & Homicide", "Shots Fired"),
-#                     values = c("#F8BE3D", "#007BAB")) +
-#   labs(x = "Year",
-#        y = "Number of Verified Incidents",
-#        title = "Incidents of Gun Violence in Charlottesville & Albemarle",
-#        caption = "Note: the 2024 data only includes incidents up to May 18.\n
-#        Data Source: Verified Anonymized Police Reports") +
-#   scale_x_continuous(breaks = scales::pretty_breaks(n = 7),
-#                      guide = guide_axis(angle = 35)) +
-#   theme_bw() +
-#   theme(legend.position = "top",
-#         legend.title = element_text(face = "bold"),
-#         axis.title.x = element_text(face = "bold"),
-#         axis.title.y = element_text(face = "bold"),
-#         strip.text.x = element_text(face = "bold"))
+regional_gv <- read_csv("data/regional_gv.csv") %>%
+  mutate(locality = word(locality, 1),
+         yr = year(reported_date))
+
+shots_fired <- regional_gv %>%
+  filter(description == "Shots Fired",
+         verified == "VERIFIED") %>%
+  group_by(yr, locality) %>%
+  count() %>%
+  rename(shots_fired = n)
+
+other <- regional_gv %>%
+  filter(description != "Shots Fired",
+         verified != "UNVERIFIED") %>%
+  group_by(yr, locality) %>%
+  count() %>%
+  rename(other = n)
+
+years <- shots_fired %>%
+  left_join(other, relationship = "many-to-many") %>%
+  pivot_longer(cols = c("shots_fired", "other"),
+               names_to = c("type"),
+               values_to = "count")
+
+ggplot(years, aes(yr, count, fill = type)) +
+  geom_col() +
+  facet_wrap(~locality) +
+  scale_fill_manual("Incident Type",
+                    labels = c("Aggravated Assault & Homicide", "Shots Fired"),
+                    values = c("#F8BE3D", "#007BAB")) +
+  labs(x = "Year",
+       y = "Number of Verified Incidents",
+       title = "Incidents of Gun Violence in Charlottesville & Albemarle",
+       caption = "Note: the 2024 data only includes incidents up to May 18.\n
+       Data Source: Verified Anonymized Police Reports") +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 7),
+                     guide = guide_axis(angle = 35)) +
+  theme_bw() +
+  theme(legend.position = "top",
+        legend.title = element_text(face = "bold"),
+        axis.title.x = element_text(face = "bold"),
+        axis.title.y = element_text(face = "bold"),
+        strip.text.x = element_text(face = "bold"))
 
 ```
 
@@ -1052,90 +1044,88 @@ As a result, this is not a definitive collection of public safety data for Charl
 The table below shows the race and age breakdown of the 513 total victims of gun violence (injury and death) reported to the police between January 2019 to May 2024.
 
 ```{r victim_demos}
-# race_county <- read_csv("data/acs_race_county.csv")
-# 
-# demos <- read_excel("data/raw/Regional GV Data - 2019-2024 YTD.xlsx", sheet = "Demographic Data for Cases") %>%
-#   clean_names() %>%
-#   distinct() %>%
-#   mutate(reported_date = ymd_hms(reported_date),
-#          yr = year(reported_date),
-#          subject_type = str_remove_all(subject_type, "/Offender"),
-#          sex = case_when(
-#            sex == "Unknown" ~ NA,
-#            TRUE ~ sex),
-#          race = case_when(
-#            race == "African American" ~ "Black",
-#            race == "Unknown" |
-#              race == "New World Text" |
-#              race == "Microsoft Word" ~ NA,
-#            TRUE ~ race)) %>%
-#   replace_na(list(sex = "Not Provided"))
-# 
-# age_groups <- demos %>%
-#   mutate(age_grp = case_when(
-#     age <= 9 ~ "9andunder",
-#     age >= 10 & age <= 14 ~ "10-14",
-#     age >= 15 & age <= 17 ~ "15-17",
-#     age >= 18 & age <= 19 ~ "18-19",
-#     age >= 20 & age <= 24 ~ "20-24",
-#     age >= 25 & age <= 34 ~ "25-34",
-#     age >= 35 & age <= 44 ~ "35-44",
-#     age >= 45 & age <= 54 ~ "45-54",
-#     age >= 55 & age <= 64 ~ "55-64",
-#     age >= 65 & age <= 74 ~ "65-74",
-#     age >= 75 ~ "75andup"
-#   ))
-# 
-# total_victims <- demos %>% filter(subject_type == "Victim") %>% nrow()
-# total_pop_cvalb <- sum(race_county$pop_est)
-# n_bl_cvalb <- sum(race_county$black)
-# pct_bl_cvalb <- percent(n_bl_cvalb/total_pop_cvalb)
-# 
-# black_victims <- demos %>% filter(subject_type == "Victim", race == "Black") %>% nrow()
-# pct_bl_vic <- percent(black_victims/total_victims)
-# 
-# victims <- age_groups %>%
-#   filter(subject_type == "Victim") %>%
-#   group_by(race, age_grp) %>%
-#   summarise(n = n(),
-#             pct = round((n() / total_victims) * 100, digits = 1)) #513 total victims 
-# 
-# orange_pal <- c("#fff2e6", "#ffb54d")
-# 
-# victims %>%
-#   select(-n) %>%
-#   pivot_wider(names_from = age_grp, values_from = pct) %>%
-#   select(`9andunder`, `10-14`, `15-17`, `18-19`, `20-24`, `25-34`, `35-44`,
-#          `45-54`, `55-64`, `65-74`, `75andup`) %>%
-#   ungroup() %>% 
-#   reactable(
-#     defaultColDef = colDef(
-#       align = "center",
-#       minWidth = 50,
-#       format = colFormat(suffix = "%"),
-#       na = "–",
-#       headerStyle = list(background = "#f7f7f8"),
-#       style = color_scales(data = ., colors = orange_pal, span=2:12)
-#     ),
-#     columns = list(
-#       race = colDef(name = "", minWidth = 100, format = colFormat(suffix = ""), na = "NA"),
-#       `9andunder` = colDef(name = "0-10"),
-#       `75andup` = colDef(name = "75+")
-#     ),
-#     bordered = TRUE,
-#     highlight = TRUE
-#   ) %>%
-#   add_source("Data Source: Verified Anonymized Police Reports",
-#              align = "right",
-#              font_size = 11)
+race_county <- read_csv("cville-alb-gun-trauma/data/acs_race_county.csv")
 
-# return text to doc ----
-# <p class="comment"><b>Notable Trends</b> <br> <br> According to the table above, Black individuals make up `r pct_bl_vic` of the victims of gun violence, but only `r pct_bl_cvalb` of the total population in Charlottesville and Albemarle. In particular, Black individuals aged 25-34 comprise 17.2% of the victims. Regardless of race, individuals aged 25-34 make up 27% of all victims.</p>
+demos <- read_excel("data/Regional GV Data - 2019-2024 YTD.xlsx", sheet = "Demographic Data for Cases") %>%
+  clean_names() %>%
+  distinct() %>%
+  mutate(reported_date = ymd_hms(reported_date),
+         yr = year(reported_date),
+         subject_type = str_remove_all(subject_type, "/Offender"),
+         sex = case_when(
+           sex == "Unknown" ~ NA,
+           TRUE ~ sex),
+         race = case_when(
+           race == "African American" ~ "Black",
+           race == "Unknown" |
+             race == "New World Text" |
+             race == "Microsoft Word" ~ NA,
+           TRUE ~ race)) %>%
+  replace_na(list(sex = "Not Provided"))
+
+age_groups <- demos %>%
+  mutate(age_grp = case_when(
+    age <= 9 ~ "9andunder",
+    age >= 10 & age <= 14 ~ "10-14",
+    age >= 15 & age <= 17 ~ "15-17",
+    age >= 18 & age <= 19 ~ "18-19",
+    age >= 20 & age <= 24 ~ "20-24",
+    age >= 25 & age <= 34 ~ "25-34",
+    age >= 35 & age <= 44 ~ "35-44",
+    age >= 45 & age <= 54 ~ "45-54",
+    age >= 55 & age <= 64 ~ "55-64",
+    age >= 65 & age <= 74 ~ "65-74",
+    age >= 75 ~ "75andup"
+  ))
+
+total_victims <- demos %>% filter(subject_type == "Victim") %>% nrow()
+total_pop_cvalb <- sum(race_county$pop_est)
+n_bl_cvalb <- sum(race_county$black)
+pct_bl_cvalb <- percent(n_bl_cvalb/total_pop_cvalb)
+
+black_victims <- demos %>% filter(subject_type == "Victim", race == "Black") %>% nrow()
+pct_bl_vic <- percent(black_victims/total_victims)
+
+victims <- age_groups %>%
+  filter(subject_type == "Victim") %>%
+  group_by(race, age_grp) %>%
+  summarise(n = n(),
+            pct = round((n() / total_victims) * 100, digits = 1)) #513 total victims
+
+orange_pal <- c("#fff2e6", "#ffb54d")
+
+victims %>%
+  select(-n) %>%
+  pivot_wider(names_from = age_grp, values_from = pct) %>%
+  select(`9andunder`, `10-14`, `15-17`, `18-19`, `20-24`, `25-34`, `35-44`,
+         `45-54`, `55-64`, `65-74`, `75andup`) %>%
+  ungroup() %>%
+  reactable(
+    defaultColDef = colDef(
+      align = "center",
+      minWidth = 50,
+      format = colFormat(suffix = "%"),
+      na = "–",
+      headerStyle = list(background = "#f7f7f8"),
+      style = color_scales(data = ., colors = orange_pal, span=2:12)
+    ),
+    columns = list(
+      race = colDef(name = "", minWidth = 100, format = colFormat(suffix = ""), na = "NA"),
+      `9andunder` = colDef(name = "0-10"),
+      `75andup` = colDef(name = "75+")
+    ),
+    bordered = TRUE,
+    highlight = TRUE
+  ) %>%
+  add_source("Data Source: Verified Anonymized Police Reports",
+             align = "right",
+             font_size = 11)
+
 ```
 
 Some elements of the police data are also available through [Citizen Connect](https://albemarlecountyva-uvaecc-transparency.connect.socrata.com/), an interface that allows users to view a variety of policing interactions across the region.
 
-<!-- return place text here -->
+<p class="comment"><b>Notable Trends</b> <br> <br> According to the table above, Black individuals make up `r pct_bl_vic` of the victims of gun violence, but only `r pct_bl_cvalb` of the total population in Charlottesville and Albemarle. In particular, Black individuals aged 25-34 comprise 17.2% of the victims. Regardless of race, individuals aged 25-34 make up 27% of all victims.</p>
 
 <details>
 
@@ -1180,32 +1170,32 @@ This data differs from the above data, shared directly by the police, in the fol
 The dataset is made up of two dataframes. The first includes information about initial crime report. This data represent the first step when gun-related crimes are recorded; the police-provided data represents the observations after subsequent steps -- officer investigation -- have occurred. The second data set includes arrest data. Both datasets have been anonymized to remove names and other identifiable information such as house numbers.
 
 ```{r odp_crimemap, fig.show="hold", fig.width=5, out.width= "50%"}
-# odp_crimes <- read_csv("data/odp_crimes.csv") 
-# odp_arrests <- read_csv("data/odp_arrests.csv")
-# load(file = "data/cville_map.RData")
-# 
-# # Geographic spread
-# ggmap(cville_map) +
-#   stat_density2d(data = odp_crimes, aes(fill = ..level.., alpha = 0.1), # removes 55 values
-#                  geom = "polygon") +
-#   theme(legend.position="none") +
-#   scale_fill_viridis_c(direction = -1) +
-#   theme_void() +
-#   theme(legend.position = "none") +
-#   labs(title = "Gun-Related Crime Reports",
-#        caption = "Total reports: 526") +
-#   theme(title = element_text(face = "bold"))
-# 
-# ggmap(cville_map) +
-#   stat_density2d(data = odp_arrests, aes(fill = ..level.., alpha = 0.1), # removes 96 values
-#                  geom = "polygon") +
-#   theme(legend.position="none") +
-#   scale_fill_viridis_c(direction = -1) +
-#   theme_void() +
-#   theme(legend.position = "none") +
-#   labs(title = "Gun-Related Arrests",
-#        caption = "Total arrests: 390") +
-#   theme(title = element_text(face = "bold"))
+odp_crimes <- read_csv("cville-alb-gun-trauma/data/odp_crimes.csv")
+odp_arrests <- read_csv("cville-alb-gun-trauma/data/odp_arrests.csv")
+load(file = "cville-alb-gun-trauma/data/cville_map.RData")
+
+# Geographic spread
+ggmap(cville_map) +
+  stat_density2d(data = odp_crimes, aes(fill = ..level.., alpha = 0.1), # removes 55 values
+                 geom = "polygon") +
+  theme(legend.position="none") +
+  scale_fill_viridis_c(direction = -1) +
+  theme_void() +
+  theme(legend.position = "none") +
+  labs(title = "Gun-Related Crime Reports",
+       caption = "Total reports: 526") +
+  theme(title = element_text(face = "bold"))
+
+ggmap(cville_map) +
+  stat_density2d(data = odp_arrests, aes(fill = ..level.., alpha = 0.1), # removes 96 values
+                 geom = "polygon") +
+  theme(legend.position="none") +
+  scale_fill_viridis_c(direction = -1) +
+  theme_void() +
+  theme(legend.position = "none") +
+  labs(title = "Gun-Related Arrests",
+       caption = "Total arrests: 390") +
+  theme(title = element_text(face = "bold"))
 ```
 
 <p align="right"><font size=1>Data Source: Charlottesville Open Data Portal</p></font>
@@ -1223,22 +1213,22 @@ Below we use the arrest data to understand whether a lot of people are committin
 
 ```{r odp_arrests, fig.cap="Number of Firearm-Related Arrests per Person"}
 # # Arrest numbers per person 
-# odp_arrests %>%
-#   group_by(id) %>%
-#   summarise(charges = n()) %>%
-#   ungroup() %>%
-#   ggplot(aes(y = charges)) +
-#   geom_bar(fill = "#007BAB") +
-#   geom_text(aes(label =..count..), stat = "count", hjust = -0.25, size = 3) +
-#   labs(x = "Number of People",
-#        y = "Number of Charges per Person",
-#        title = "Number of Firearm-Related Arrests per Person",
-#        caption = "Total number of people arrested: 233") +
-#   scale_y_continuous(breaks = c(1:15)) +
-#   geom_label(aes(90, 10, label = "86% of people arrested \nfor gun-related crimes \nhave 2 or fewer charges")) +
-#   theme_minimal() +
-#   theme(axis.title.x = element_text(face = "bold"),
-#         axis.title.y = element_text(face = "bold"))
+odp_arrests %>%
+  group_by(id) %>%
+  summarise(charges = n()) %>%
+  ungroup() %>%
+  ggplot(aes(y = charges)) +
+  geom_bar(fill = "#007BAB") +
+  geom_text(aes(label =..count..), stat = "count", hjust = -0.25, size = 3) +
+  labs(x = "Number of People",
+       y = "Number of Charges per Person",
+       title = "Number of Firearm-Related Arrests per Person",
+       caption = "Total number of people arrested: 233") +
+  scale_y_continuous(breaks = c(1:15)) +
+  geom_label(aes(90, 10, label = "86% of people arrested \nfor gun-related crimes \nhave 2 or fewer charges")) +
+  theme_minimal() +
+  theme(axis.title.x = element_text(face = "bold"),
+        axis.title.y = element_text(face = "bold"))
 ```
 
 <p align="right"><font size=1>Data Source: Charlottesville Open Data Portal</p></font>
@@ -1265,45 +1255,42 @@ The data has been filtered to only include crime reports that involve firearms, 
 ### Use of Force
 
 ```{r force}
-# force <- read_csv("data/nibrs_force.csv")
+force <- read_csv("cville-alb-gun-trauma/data/nibrs_force.csv")
 ```
 
 In Virginia, the decision for a police officer to use force requires an analysis of the facts and circumstances of each particular case, including the severity of the crime at issue, whether the suspect poses an immediate threat to the safety of the officer or others, and whether the suspect is actively resisting arrest. As a result, this decision is often up to the officer's immediate interpretation of the scene, and may result in excessive, or deadly, force. Deadly force is defined as any force that is likely or intended to cause serious bodily injury or death, and typically includes the use of firearms, although it can also include batons, rubber bullets, or neck restraints.[^18]
 
 [^18]: Virginia Law Code § 19.2-83.5. Use of deadly force by a law-enforcement officer during an arrest or detention. <https://law.lis.virginia.gov/vacode/title19.2/chapter7.1/section19.2-83.5/>. Accessed February 10, 2025.
 
-<!-- return text here -->
+The table below shows a breakdown of the `r sum(force$all)` incidents of force in Virginia between 2019 - 2023, and whether they resulted in death, serious injury, or if a firearm was used but didn't result result in death or serious injury.
 
 ```{r force_tbl}
-# text to return to doc above ----
-# The table below shows a breakdown of the `r sum(force$all)` incidents of force in Virginia between 2019 - 2023, and whether they resulted in death, serious injury, or if a firearm was used but didn't result result in death or serious injury.
+force_tbl <- force %>%
+  mutate_at(vars(all:pct_serious_injury), as.character) %>%
+  rowwise() %>%
+  mutate(death_tbl = paste0(death, " (", pct_death, "%)"),
+         injury_tbl = paste0(serious_injury, " (", pct_serious_injury, "%)"),
+         no_tbl = paste0(firearm_nodeathorinjury, " (", pct_firearm_noharm, "%)")) %>%
+  select(yr, locality, contains("tbl"), all) %>%
+  rename(Locality = locality,
+         "Deaths (% of Annual Incidents)" = death_tbl,
+         "Serious Injury (% of Annual Incidents)" = injury_tbl,
+         "Firearm Discharged without Death or Serious Injury (% of Annual Incidents)" = no_tbl,
+         "Total Incidents" = all)
 
-# force_tbl <- force %>% 
-#   mutate_at(vars(all:pct_serious_injury), as.character) %>%
-#   rowwise() %>%
-#   mutate(death_tbl = paste0(death, " (", pct_death, "%)"),
-#          injury_tbl = paste0(serious_injury, " (", pct_serious_injury, "%)"),
-#          no_tbl = paste0(firearm_nodeathorinjury, " (", pct_firearm_noharm, "%)")) %>%
-#   select(yr, locality, contains("tbl"), all) %>%
-#   rename(Locality = locality,
-#          "Deaths (% of Annual Incidents)" = death_tbl,
-#          "Serious Injury (% of Annual Incidents)" = injury_tbl,
-#          "Firearm Discharged without Death or Serious Injury (% of Annual Incidents)" = no_tbl,
-#          "Total Incidents" = all)
-# 
-# force_tbl %>%
-#   reactable(
-#     defaultColDef = colDef(
-#     minWidth = 70,
-#     align = "left",
-#     headerStyle = list(background = "#f7f7f8")),
-#     bordered = TRUE,
-#     highlight = TRUE,
-#     columns = list(
-#       yr = colDef(name = "Year", minWidth = 40))) %>%
-#   add_source("Data Source: National Incident-Based Reporting System",
-#              align = "right",
-#              font_size = 11)
+force_tbl %>%
+  reactable(
+    defaultColDef = colDef(
+    minWidth = 70,
+    align = "left",
+    headerStyle = list(background = "#f7f7f8")),
+    bordered = TRUE,
+    highlight = TRUE,
+    columns = list(
+      yr = colDef(name = "Year", minWidth = 40))) %>%
+  add_source("Data Source: National Incident-Based Reporting System",
+             align = "right",
+             font_size = 11)
 ```
 
 <p class="comment"><b> Notable Trends</b> <br> <br> In Virginia, the total number of incidents where police used force increased from 40 in 2019 to 60 in 2023. In 2023, there were 23 individuals killed by police, 24 individuals seriously injured, and 13 incidents where a firearm was used by an officer, but didn't result in death or injury.</p>
@@ -1323,25 +1310,25 @@ Virginia Law defines an officer-involved shooting as the discharge of a firearm 
 The table below shows an anonymized version of the 10 victims of officer-involved shootings in Charlottesville and Albemarle from 2016 to today.
 
 ```{r ois}
-# police_shootings <- read_csv("data/gva_officer.csv") %>%
-#   rename("Date of Shooting" = incident_date,
-#          "Outcome" = outcome,
-#          "Victim Age" = victim_age,
-#          "Victim Gender" = gender, 
-#          "Victim Race" = race,
-#          "Did the victim have a weapon?" = weapon)
-# 
-# police_shootings %>%
-#   reactable(
-#     defaultColDef = colDef(
-#     minWidth = 70,
-#     align = "left",
-#     headerStyle = list(background = "#f7f7f8")),
-#     bordered = TRUE,
-#     highlight = TRUE) %>%
-#   add_source("Data Source: Gun Violence Archive",
-#              align = "right",
-#              font_size = 11)
+police_shootings <- read_csv("cville-alb-gun-trauma/data/gva_officer.csv") %>%
+  rename("Date of Shooting" = incident_date,
+         "Outcome" = outcome,
+         "Victim Age" = victim_age,
+         "Victim Gender" = gender,
+         "Victim Race" = race,
+         "Did the victim have a weapon?" = weapon)
+
+police_shootings %>%
+  reactable(
+    defaultColDef = colDef(
+    minWidth = 70,
+    align = "left",
+    headerStyle = list(background = "#f7f7f8")),
+    bordered = TRUE,
+    highlight = TRUE) %>%
+  add_source("Data Source: Gun Violence Archive",
+             align = "right",
+             font_size = 11)
 ```
 
 <p class="comment"><b>Notable Trends</b> <br> <br> The table above shows the demographic information about the 10 victims of officer-involved shootings in Charlottesville and Albemarle. Of the victims, 40% died as a result of the incident, 50% were identified as Black, and the median age was 37. All of the victims were males that were described as being in possession of a firearm.</p>
@@ -1384,123 +1371,123 @@ The map below shows the percentages of individuals under 18 and 25 years old, re
 
 ```{r youth_pops}
 # # Get police-provided gun violence data
-# gv <- read_csv("data/regional_gv.csv")
-# 
-# # Get census shape data
-# dat <- readRDS("data/acs_tract_info.RDS")
-# 
-# # Convert lat/lon coords to sf points
-# gv_pts <- gv %>%
-#   st_as_sf(coords = c("lon", "lat"), crs = 4326)
-# 
-# # Count incidents per tract
-# gv_sf_summary <- dat %>% 
-#   mutate(counts = lengths(st_intersects(., gv_pts))) %>%
-#   group_by(tract) %>%
-#   mutate(incidents_pop = (counts / pop_est),
-#          percent_incidents = (counts / 887) * 100,
-#          locality = str_to_title(locality)) 
-# 
-# pal_age <- colorNumeric(palette = "viridis", 
-#                     domain = 0:100, 
-#                     reverse = TRUE)
-# 
-# gv_sf_summary %>%
-#   filter(tract_name != "JPA - Fontaine") %>%
-#   leaflet() %>%
-#   addProviderTiles(providers$CartoDB.Positron) %>% 
-#   addPolygons(group = "Under 18",
-#               stroke = TRUE, 
-#               weight = 0.5,
-#               opacity = 1,
-#               color = "black", 
-#               fillColor = ~ pal_age(percent_under18),
-#               fillOpacity = 0.5,
-#               popup = paste0("Percent of Population Under 18: ", 
-#                              round(gv_sf_summary$percent_under18, digits = 2), "%", "<br>",
-#                              "Number of People Under 18: ", gv_sf_summary$total_under18, "<br>",
-#                              "Total Population: ", gv_sf_summary$pop_est, "<br>",
-#                              "Tract: ", gv_sf_summary$tract_name, ", ", gv_sf_summary$locality),
-#               highlightOptions = highlightOptions(
-#                 fillOpacity = 1,
-#                 bringToFront = FALSE
-#               )) %>%
-#   addPolygons(group = "Under 25",
-#               stroke = TRUE, 
-#               weight = 0.5,
-#               opacity = 1,
-#               color = "black", 
-#               fillColor = ~ pal_age(percent_under25),
-#               fillOpacity = 0.5,
-#               popup = paste0("Percent of Population Under 25: ", 
-#                              round(gv_sf_summary$percent_under25, digits = 2),  "%", "<br>",
-#                              "Number of People Under 25: ", gv_sf_summary$total_under25, "<br>",
-#                              "Total Population: ", gv_sf_summary$pop_est, "<br>", 
-#                              "Tract: ", gv_sf_summary$tract_name, ", ", gv_sf_summary$locality),
-#               highlightOptions = highlightOptions(
-#                 fillOpacity = 1,
-#                 bringToFront = FALSE
-#               )) %>%
-#   addLegend("bottomright",
-#             pal = pal_age,
-#             values = ~ percent_under25, 
-#             title = paste("Percentage of the Population"), 
-#             labFormat = labelFormat(suffix = "%"),
-#             opacity = 1) %>%
-#   addLayersControl(baseGroups = c("Under 18","Under 25"),
-#                    options = layersControlOptions(collapsed = FALSE)) %>%
-#   addMarkers(data = gv, 
-#              lng = gv$lon,
-#              lat = gv$lat,
-#              popup = paste0("Description: ", gv$description, "<br>",
-#                             "Date: ", gv$reported_date, "<br>",
-#                             "Status: ", gv$verified),
-#              clusterOptions = markerClusterOptions(
-#                showCoverageOnHover = FALSE,
-#                iconCreateFunction=JS("function (cluster) {    
-#     var childCount = cluster.getChildCount();  
-#     if (childCount < 100) {  
-#       c = 'rgba(211,211,211);'
-#     } else if (childCount < 1000) {  
-#       c = 'rgba(211,211,211);'  
-#     } else { 
-#       c = 'rgb(211,211,211);'  
-#     }    
-#     return new L.DivIcon({ html: '<div style=\"background-color:'+c+'\"><span>' + childCount + '</span></div>', className: 'marker-cluster', iconSize: new L.Point(40, 40) });
-# 
-#   }")
-#              ))
-  
+gv <- read_csv("data/regional_gv.csv")
+
+# Get census shape data
+dat <- readRDS("cville-alb-gun-trauma/data/acs_tract_info.RDS")
+
+# Convert lat/lon coords to sf points
+gv_pts <- gv %>%
+  st_as_sf(coords = c("lon", "lat"), crs = 4326)
+
+# Count incidents per tract
+gv_sf_summary <- dat %>%
+  mutate(counts = lengths(st_intersects(., gv_pts))) %>%
+  group_by(tract) %>%
+  mutate(incidents_pop = (counts / pop_est),
+         percent_incidents = (counts / 887) * 100,
+         locality = str_to_title(locality))
+
+pal_age <- colorNumeric(palette = "viridis",
+                    domain = 0:100,
+                    reverse = TRUE)
+
+gv_sf_summary %>%
+  filter(tract_name != "JPA - Fontaine") %>%
+  leaflet() %>%
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  addPolygons(group = "Under 18",
+              stroke = TRUE,
+              weight = 0.5,
+              opacity = 1,
+              color = "black",
+              fillColor = ~ pal_age(percent_under18),
+              fillOpacity = 0.5,
+              popup = paste0("Percent of Population Under 18: ",
+                             round(gv_sf_summary$percent_under18, digits = 2), "%", "<br>",
+                             "Number of People Under 18: ", gv_sf_summary$total_under18, "<br>",
+                             "Total Population: ", gv_sf_summary$pop_est, "<br>",
+                             "Tract: ", gv_sf_summary$tract_name, ", ", gv_sf_summary$locality),
+              highlightOptions = highlightOptions(
+                fillOpacity = 1,
+                bringToFront = FALSE
+              )) %>%
+  addPolygons(group = "Under 25",
+              stroke = TRUE,
+              weight = 0.5,
+              opacity = 1,
+              color = "black",
+              fillColor = ~ pal_age(percent_under25),
+              fillOpacity = 0.5,
+              popup = paste0("Percent of Population Under 25: ",
+                             round(gv_sf_summary$percent_under25, digits = 2),  "%", "<br>",
+                             "Number of People Under 25: ", gv_sf_summary$total_under25, "<br>",
+                             "Total Population: ", gv_sf_summary$pop_est, "<br>",
+                             "Tract: ", gv_sf_summary$tract_name, ", ", gv_sf_summary$locality),
+              highlightOptions = highlightOptions(
+                fillOpacity = 1,
+                bringToFront = FALSE
+              )) %>%
+  addLegend("bottomright",
+            pal = pal_age,
+            values = ~ percent_under25,
+            title = paste("Percentage of the Population"),
+            labFormat = labelFormat(suffix = "%"),
+            opacity = 1) %>%
+  addLayersControl(baseGroups = c("Under 18","Under 25"),
+                   options = layersControlOptions(collapsed = FALSE)) %>%
+  addMarkers(data = gv,
+             lng = gv$lon,
+             lat = gv$lat,
+             popup = paste0("Description: ", gv$description, "<br>",
+                            "Date: ", gv$reported_date, "<br>",
+                            "Status: ", gv$verified),
+             clusterOptions = markerClusterOptions(
+               showCoverageOnHover = FALSE,
+               iconCreateFunction=JS("function (cluster) {
+    var childCount = cluster.getChildCount();
+    if (childCount < 100) {
+      c = 'rgba(211,211,211);'
+    } else if (childCount < 1000) {
+      c = 'rgba(211,211,211);'
+    } else {
+      c = 'rgb(211,211,211);'
+    }
+    return new L.DivIcon({ html: '<div style=\"background-color:'+c+'\"><span>' + childCount + '</span></div>', className: 'marker-cluster', iconSize: new L.Point(40, 40) });
+
+  }")
+             ))
+
 ```
 
 
 #### Scatterplot
 
 ```{r age_scatter, fig.cap="Under 18 Population Percentages Compared to Incidents of Gun Violence"}
-# scatter_text <- gv_sf_summary %>%
-#   filter(percent_incidents > 4)
-# 
-# gv_sf_summary %>%
-#   filter(tract_name != "JPA - Fontaine") %>%
-#   ggplot(aes(x = percent_under18, y = percent_incidents, size = pop_est, color = locality))  +
-#   geom_point(alpha = 0.8) +
-#   scale_size(range = c(.1, 12)) +
-#   geom_label(data = scatter_text, 
-#             aes(x = percent_under18, y = percent_incidents, label = tract_name), 
-#             size = 3, hjust = 1,
-#             inherit.aes = FALSE) +
-#   scale_color_manual(values = c("#007BAB", "#F8BE3D"), 
-#                     name = "Region") +
-#   scale_y_continuous(labels = function(x) paste0(x, "%")) +
-#   scale_x_continuous(labels = function(x) paste0(round(x), "%")) +
-#   labs(x = "Percentage of the Population Under 18 Years Old",
-#        y = "Percentage of Total Gun Violence Incidents",
-#        title = "Under 18 Population Percentages Compared to Incidents of Gun Violence",
-#        subtitle = "Each circle represents a different census tract",
-#        caption = "Years: 2018 - 2024",
-#        size = "Estimated Population") +
-#   guides(size = "none") +
-#   theme_minimal()
+scatter_text <- gv_sf_summary %>%
+  filter(percent_incidents > 4)
+
+gv_sf_summary %>%
+  filter(tract_name != "JPA - Fontaine") %>%
+  ggplot(aes(x = percent_under18, y = percent_incidents, size = pop_est, color = locality))  +
+  geom_point(alpha = 0.8) +
+  scale_size(range = c(.1, 12)) +
+  geom_label(data = scatter_text,
+            aes(x = percent_under18, y = percent_incidents, label = tract_name),
+            size = 3, hjust = 1,
+            inherit.aes = FALSE) +
+  scale_color_manual(values = c("#007BAB", "#F8BE3D"),
+                    name = "Region") +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  scale_x_continuous(labels = function(x) paste0(round(x), "%")) +
+  labs(x = "Percentage of the Population Under 18 Years Old",
+       y = "Percentage of Total Gun Violence Incidents",
+       title = "Under 18 Population Percentages Compared to Incidents of Gun Violence",
+       subtitle = "Each circle represents a different census tract",
+       caption = "Years: 2018 - 2024",
+       size = "Estimated Population") +
+  guides(size = "none") +
+  theme_minimal()
 
 ```
 
@@ -1540,102 +1527,102 @@ The map below shows the rates of children and adults living in poverty in our re
 </details>
 
 ```{r pov_map}
-# pal_pov <- colorNumeric(palette = "viridis",
-#                         domain = NULL,
-#                         reverse = TRUE)
-# 
-# gv_sf_summary %>%
-#   leaflet() %>%
-#   addProviderTiles(providers$CartoDB.Positron) %>% 
-#   addPolygons(group = "Overall Poverty",
-#               stroke = TRUE, 
-#               weight = 0.5,
-#               opacity = 1,
-#               color = "black", 
-#               fillColor = ~ pal_pov(poverty_est),
-#               fillOpacity = 0.5,
-#               popup = paste0("Poverty Rate: ", gv_sf_summary$poverty_est, "%", "<br>",
-#                              "Childhood Poverty Rate: ", gv_sf_summary$cpov_est, "%", "<br>",
-#                              "Population: ", gv_sf_summary$pop_est, "<br>",
-#                              "Tract: ", gv_sf_summary$tract_name, ", ", gv_sf_summary$locality),
-#               highlightOptions = highlightOptions(
-#                 fillOpacity = 1,
-#                 bringToFront = FALSE
-#               )) %>%
-#   addPolygons(group = "Child Poverty",
-#               stroke = TRUE, 
-#               weight = 0.5,
-#               opacity = 1,
-#               color = "black", 
-#               fillColor = ~ pal_pov(cpov_est),
-#               fillOpacity = 0.5,
-#               popup = paste0("Poverty Rate: ", gv_sf_summary$poverty_est, "%", "<br>",
-#                              "Child Poverty Rate: ", gv_sf_summary$cpov_est, "%", "<br>",
-#                              "Population: ", gv_sf_summary$pop_est, "<br>",
-#                              "Tract: ", gv_sf_summary$tract_name, ", ", gv_sf_summary$locality),
-#               highlightOptions = highlightOptions(
-#                 fillOpacity = 1,
-#                 bringToFront = FALSE
-#               )) %>%
-#   addLegend("bottomright",
-#             pal = pal_pov,
-#             values = ~ poverty_est, 
-#             title = "Estimated Poverty Rates",
-#             labFormat = labelFormat(suffix = "%"), 
-#             opacity = 1) %>%
-#   addLayersControl(baseGroups = c("Overall Poverty", "Child Poverty"),
-#                    options = layersControlOptions(collapsed = FALSE)) %>%
-#   addMarkers(data = gv,
-#              lng = gv$lon,
-#              lat = gv$lat,
-#              popup = paste0("Description: ", gv$description, "<br>",
-#                             "Date: ", gv$reported_date, "<br>",
-#                             "Status: ", gv$verified),
-#              clusterOptions = markerClusterOptions(
-#                showCoverageOnHover = FALSE,
-#                iconCreateFunction=JS("function (cluster) {    
-#     var childCount = cluster.getChildCount();  
-#     if (childCount < 100) {  
-#       c = 'rgba(211,211,211);'
-#     } else if (childCount < 1000) {  
-#       c = 'rgba(211,211,211);'  
-#     } else { 
-#       c = 'rgb(211,211,211);'  
-#     }    
-#     return new L.DivIcon({ html: '<div style=\"background-color:'+c+'\"><span>' + childCount + '</span></div>', className: 'marker-cluster', iconSize: new L.Point(40, 40) });
-# 
-#   }")
-#              ))
+pal_pov <- colorNumeric(palette = "viridis",
+                        domain = NULL,
+                        reverse = TRUE)
+
+gv_sf_summary %>%
+  leaflet() %>%
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  addPolygons(group = "Overall Poverty",
+              stroke = TRUE,
+              weight = 0.5,
+              opacity = 1,
+              color = "black",
+              fillColor = ~ pal_pov(poverty_est),
+              fillOpacity = 0.5,
+              popup = paste0("Poverty Rate: ", gv_sf_summary$poverty_est, "%", "<br>",
+                             "Childhood Poverty Rate: ", gv_sf_summary$cpov_est, "%", "<br>",
+                             "Population: ", gv_sf_summary$pop_est, "<br>",
+                             "Tract: ", gv_sf_summary$tract_name, ", ", gv_sf_summary$locality),
+              highlightOptions = highlightOptions(
+                fillOpacity = 1,
+                bringToFront = FALSE
+              )) %>%
+  addPolygons(group = "Child Poverty",
+              stroke = TRUE,
+              weight = 0.5,
+              opacity = 1,
+              color = "black",
+              fillColor = ~ pal_pov(cpov_est),
+              fillOpacity = 0.5,
+              popup = paste0("Poverty Rate: ", gv_sf_summary$poverty_est, "%", "<br>",
+                             "Child Poverty Rate: ", gv_sf_summary$cpov_est, "%", "<br>",
+                             "Population: ", gv_sf_summary$pop_est, "<br>",
+                             "Tract: ", gv_sf_summary$tract_name, ", ", gv_sf_summary$locality),
+              highlightOptions = highlightOptions(
+                fillOpacity = 1,
+                bringToFront = FALSE
+              )) %>%
+  addLegend("bottomright",
+            pal = pal_pov,
+            values = ~ poverty_est,
+            title = "Estimated Poverty Rates",
+            labFormat = labelFormat(suffix = "%"),
+            opacity = 1) %>%
+  addLayersControl(baseGroups = c("Overall Poverty", "Child Poverty"),
+                   options = layersControlOptions(collapsed = FALSE)) %>%
+  addMarkers(data = gv,
+             lng = gv$lon,
+             lat = gv$lat,
+             popup = paste0("Description: ", gv$description, "<br>",
+                            "Date: ", gv$reported_date, "<br>",
+                            "Status: ", gv$verified),
+             clusterOptions = markerClusterOptions(
+               showCoverageOnHover = FALSE,
+               iconCreateFunction=JS("function (cluster) {
+    var childCount = cluster.getChildCount();
+    if (childCount < 100) {
+      c = 'rgba(211,211,211);'
+    } else if (childCount < 1000) {
+      c = 'rgba(211,211,211);'
+    } else {
+      c = 'rgb(211,211,211);'
+    }
+    return new L.DivIcon({ html: '<div style=\"background-color:'+c+'\"><span>' + childCount + '</span></div>', className: 'marker-cluster', iconSize: new L.Point(40, 40) });
+
+  }")
+             ))
 ```
 
 
 #### Scatterplot
 
 ```{r pov_scatter, fig.cap="Childhood Poverty Rates Compared to Incidents of Gun Violence"}
-# scatter_text2 <- gv_sf_summary %>%
-#   filter(cpov_est > 31)
-# 
-# gv_sf_summary %>%
-#   filter(tract_name != "JPA - Fontaine") %>%
-#   ggplot(aes(x = cpov_est, y = percent_incidents, size = pop_est, color = locality)) +
-#   geom_point(alpha = 0.8) +
-#   scale_size(range = c(.1, 12)) +
-#   geom_label_repel(data = scatter_text2, 
-#                    aes(x = cpov_est, y = percent_incidents, label = tract_name), size = 3, 
-#                    min.segment.length = unit(0, 'lines'),
-#                    inherit.aes = FALSE) +
-#   scale_color_manual(values = c("#007BAB", "#F8BE3D"), 
-#                    name = "Region") +
-#   scale_y_continuous(labels = function(x) paste0(x, "%")) +
-#   scale_x_continuous(labels = function(x) paste0(round(x), "%")) +
-#   labs(x = "Percentage of Children Under 18 Living in Poverty",
-#        y = "Percentage of Total Gun Violence Incidents",
-#        title = "Childhood Poverty Rates Compared to Incidents of Gun Violence",
-#        subtitle = "Each circle represents a different census tract",
-#        caption = "Years: 2018 - 2024",
-#        size = "Estimated Population") +
-#   guides(size = "none") +
-#   theme_minimal()
+scatter_text2 <- gv_sf_summary %>%
+  filter(cpov_est > 31)
+
+gv_sf_summary %>%
+  filter(tract_name != "JPA - Fontaine") %>%
+  ggplot(aes(x = cpov_est, y = percent_incidents, size = pop_est, color = locality)) +
+  geom_point(alpha = 0.8) +
+  scale_size(range = c(.1, 12)) +
+  geom_label_repel(data = scatter_text2,
+                   aes(x = cpov_est, y = percent_incidents, label = tract_name), size = 3,
+                   min.segment.length = unit(0, 'lines'),
+                   inherit.aes = FALSE) +
+  scale_color_manual(values = c("#007BAB", "#F8BE3D"),
+                   name = "Region") +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  scale_x_continuous(labels = function(x) paste0(round(x), "%")) +
+  labs(x = "Percentage of Children Under 18 Living in Poverty",
+       y = "Percentage of Total Gun Violence Incidents",
+       title = "Childhood Poverty Rates Compared to Incidents of Gun Violence",
+       subtitle = "Each circle represents a different census tract",
+       caption = "Years: 2018 - 2024",
+       size = "Estimated Population") +
+  guides(size = "none") +
+  theme_minimal()
 ```
 
 <p class="comment"><b>Notable Trends</b> <br> <br> According to the scatterplot above, there is a positive relationship between the percentage of youth living in poverty and the occurrence of gun violence. The census tracts with the highest percentages of youth living in poverty are 10th & Page - Venable, Fifeville - Cherry Avenue, and Ridge Street.</p>
@@ -1676,89 +1663,89 @@ The map below shows the median earnings of each individual by education level. E
 </details>
 
 ```{r earnings_map}
-# pal_earn <- colorNumeric(palette = "viridis",
-#                         domain = c(15000:130000),
-#                         reverse = FALSE)
-# 
-# gv_sf_summary %>%
-#   leaflet() %>%
-#   addProviderTiles(providers$CartoDB.Positron) %>% 
-#   addPolygons(group = "All Education Levels",
-#               stroke = TRUE, 
-#               weight = 0.5,
-#               opacity = 1,
-#               color = "black", 
-#               fillColor = ~ pal_earn(med_earn_25),
-#               fillOpacity = 0.5,
-#               popup = paste0("Median Earnings: ", scales::dollar(gv_sf_summary$med_earn_25), "<br>",
-#                              "Poverty Rate: ", gv_sf_summary$poverty_est, "%", "<br>",
-#                              "Population: ", gv_sf_summary$pop_est, "<br>",
-#                              "Tract: ", gv_sf_summary$tract_name, ", ", gv_sf_summary$locality),
-#               highlightOptions = highlightOptions(
-#                 fillOpacity = 1,
-#                 bringToFront = FALSE
-#               )) %>%
-#   addPolygons(group = "High School Degree or Equivalent",
-#               stroke = TRUE, 
-#               weight = 0.5,
-#               opacity = 1,
-#               color = "black", 
-#               fillColor = ~ pal_earn(med_earn_hs),
-#               fillOpacity = 0.5,
-#               popup = paste0("Median Earnings: ", scales::dollar(gv_sf_summary$med_earn_hs), "<br>",
-#                              "Poverty Rate: ", gv_sf_summary$poverty_est, "%", "<br>",
-#                              "Population: ", gv_sf_summary$pop_est, "<br>",
-#                              "Tract: ", gv_sf_summary$tract_name, ", ", gv_sf_summary$locality),
-#               highlightOptions = highlightOptions(
-#                 fillOpacity = 1,
-#                 bringToFront = FALSE
-#               )) %>%
-#   addPolygons(group = "Bachelors Degree or Equivalent",
-#               stroke = TRUE, 
-#               weight = 0.5,
-#               opacity = 1,
-#               color = "black", 
-#               fillColor = ~ pal_earn(med_earn_bd),
-#               fillOpacity = 0.5,
-#               popup = paste0("Median Earnings: ", scales::dollar(gv_sf_summary$med_earn_bd), "<br>",
-#                              "Poverty Rate: ", gv_sf_summary$poverty_est, "%", "<br>",
-#                              "Population: ", gv_sf_summary$pop_est, "<br>",
-#                              "Tract: ", gv_sf_summary$tract_name, ", ", gv_sf_summary$locality),
-#               highlightOptions = highlightOptions(
-#                 fillOpacity = 1,
-#                 bringToFront = FALSE
-#               )) %>%
-#   addLegend("bottomright",
-#             pal = pal_earn,
-#             values = c(15000:130000), 
-#             title = "Median Earnings",
-#             labFormat = labelFormat(prefix = "$"), 
-#             opacity = 1) %>%
-#   addLayersControl(baseGroups = c("All Education Levels",
-#                                   "High School Degree or Equivalent",
-#                                   "Bachelors Degree or Equivalent"),
-#                    options = layersControlOptions(collapsed = FALSE)) %>%
-#   addMarkers(data = gv, 
-#              lng = gv$lon,
-#              lat = gv$lat,
-#              popup = paste0("Description: ", gv$description, "<br>",
-#                             "Date: ", gv$reported_date, "<br>",
-#                             "Status: ", gv$verified),
-#              clusterOptions = markerClusterOptions(
-#                showCoverageOnHover = FALSE,
-#                iconCreateFunction=JS("function (cluster) {    
-#     var childCount = cluster.getChildCount();  
-#     if (childCount < 100) {  
-#       c = 'rgba(211,211,211);'
-#     } else if (childCount < 1000) {  
-#       c = 'rgba(211,211,211);'  
-#     } else { 
-#       c = 'rgb(211,211,211);'  
-#     }    
-#     return new L.DivIcon({ html: '<div style=\"background-color:'+c+'\"><span>' + childCount + '</span></div>', className: 'marker-cluster', iconSize: new L.Point(40, 40) });
-# 
-#   }")
-#              ))
+pal_earn <- colorNumeric(palette = "viridis",
+                        domain = c(15000:130000),
+                        reverse = FALSE)
+
+gv_sf_summary %>%
+  leaflet() %>%
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  addPolygons(group = "All Education Levels",
+              stroke = TRUE,
+              weight = 0.5,
+              opacity = 1,
+              color = "black",
+              fillColor = ~ pal_earn(med_earn_25),
+              fillOpacity = 0.5,
+              popup = paste0("Median Earnings: ", scales::dollar(gv_sf_summary$med_earn_25), "<br>",
+                             "Poverty Rate: ", gv_sf_summary$poverty_est, "%", "<br>",
+                             "Population: ", gv_sf_summary$pop_est, "<br>",
+                             "Tract: ", gv_sf_summary$tract_name, ", ", gv_sf_summary$locality),
+              highlightOptions = highlightOptions(
+                fillOpacity = 1,
+                bringToFront = FALSE
+              )) %>%
+  addPolygons(group = "High School Degree or Equivalent",
+              stroke = TRUE,
+              weight = 0.5,
+              opacity = 1,
+              color = "black",
+              fillColor = ~ pal_earn(med_earn_hs),
+              fillOpacity = 0.5,
+              popup = paste0("Median Earnings: ", scales::dollar(gv_sf_summary$med_earn_hs), "<br>",
+                             "Poverty Rate: ", gv_sf_summary$poverty_est, "%", "<br>",
+                             "Population: ", gv_sf_summary$pop_est, "<br>",
+                             "Tract: ", gv_sf_summary$tract_name, ", ", gv_sf_summary$locality),
+              highlightOptions = highlightOptions(
+                fillOpacity = 1,
+                bringToFront = FALSE
+              )) %>%
+  addPolygons(group = "Bachelors Degree or Equivalent",
+              stroke = TRUE,
+              weight = 0.5,
+              opacity = 1,
+              color = "black",
+              fillColor = ~ pal_earn(med_earn_bd),
+              fillOpacity = 0.5,
+              popup = paste0("Median Earnings: ", scales::dollar(gv_sf_summary$med_earn_bd), "<br>",
+                             "Poverty Rate: ", gv_sf_summary$poverty_est, "%", "<br>",
+                             "Population: ", gv_sf_summary$pop_est, "<br>",
+                             "Tract: ", gv_sf_summary$tract_name, ", ", gv_sf_summary$locality),
+              highlightOptions = highlightOptions(
+                fillOpacity = 1,
+                bringToFront = FALSE
+              )) %>%
+  addLegend("bottomright",
+            pal = pal_earn,
+            values = c(15000:130000),
+            title = "Median Earnings",
+            labFormat = labelFormat(prefix = "$"),
+            opacity = 1) %>%
+  addLayersControl(baseGroups = c("All Education Levels",
+                                  "High School Degree or Equivalent",
+                                  "Bachelors Degree or Equivalent"),
+                   options = layersControlOptions(collapsed = FALSE)) %>%
+  addMarkers(data = gv,
+             lng = gv$lon,
+             lat = gv$lat,
+             popup = paste0("Description: ", gv$description, "<br>",
+                            "Date: ", gv$reported_date, "<br>",
+                            "Status: ", gv$verified),
+             clusterOptions = markerClusterOptions(
+               showCoverageOnHover = FALSE,
+               iconCreateFunction=JS("function (cluster) {
+    var childCount = cluster.getChildCount();
+    if (childCount < 100) {
+      c = 'rgba(211,211,211);'
+    } else if (childCount < 1000) {
+      c = 'rgba(211,211,211);'
+    } else {
+      c = 'rgb(211,211,211);'
+    }
+    return new L.DivIcon({ html: '<div style=\"background-color:'+c+'\"><span>' + childCount + '</span></div>', className: 'marker-cluster', iconSize: new L.Point(40, 40) });
+
+  }")
+             ))
 
 ```
 
@@ -1766,30 +1753,30 @@ The map below shows the median earnings of each individual by education level. E
 #### Scatterplot
 
 ```{r earnings_scatter, fig.cap="Median Annual Earnings Compared to Incidents of Gun Violence"}
-# scatter_text3 <- gv_sf_summary %>%
-#   filter(percent_incidents > 5 |
-#            med_earn_25 < 30000)
-# 
-# gv_sf_summary %>%
-#   ggplot(aes(x = med_earn_25, y = percent_incidents, size = pop_est, color = locality)) +
-#   geom_point(alpha = 0.8) +
-#   scale_size(range = c(.1, 12)) +
-#   geom_label_repel(data = scatter_text3,
-#                    aes(x = med_earn_25, y = percent_incidents, label = tract_name), size = 3,
-#                    min.segment.length = unit(0, 'lines'),
-#                    inherit.aes = FALSE) +
-#   scale_color_manual(values = c("#007BAB", "#F8BE3D"), 
-#                    name = "Region") +
-#   scale_y_continuous(labels = function(x) paste0(x, "%")) +
-#   scale_x_continuous(labels = scales::label_dollar()) +
-#   labs(x = "Median Annual Earnings (25+ years old)",
-#        y = "Percentage of Total Gun Violence Incidents",
-#        title = "Median Annual Earnings Compared to Incidents of Gun Violence",
-#        subtitle = "Each circle represents a different census tract",
-#        caption = "Years: 2018 - 2024",
-#        size = "Estimated Population") +
-#   guides(size = "none") +
-#   theme_minimal()
+scatter_text3 <- gv_sf_summary %>%
+  filter(percent_incidents > 5 |
+           med_earn_25 < 30000)
+
+gv_sf_summary %>%
+  ggplot(aes(x = med_earn_25, y = percent_incidents, size = pop_est, color = locality)) +
+  geom_point(alpha = 0.8) +
+  scale_size(range = c(.1, 12)) +
+  geom_label_repel(data = scatter_text3,
+                   aes(x = med_earn_25, y = percent_incidents, label = tract_name), size = 3,
+                   min.segment.length = unit(0, 'lines'),
+                   inherit.aes = FALSE) +
+  scale_color_manual(values = c("#007BAB", "#F8BE3D"),
+                   name = "Region") +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  scale_x_continuous(labels = scales::label_dollar()) +
+  labs(x = "Median Annual Earnings (25+ years old)",
+       y = "Percentage of Total Gun Violence Incidents",
+       title = "Median Annual Earnings Compared to Incidents of Gun Violence",
+       subtitle = "Each circle represents a different census tract",
+       caption = "Years: 2018 - 2024",
+       size = "Estimated Population") +
+  guides(size = "none") +
+  theme_minimal()
 ```
 
 <p class="comment"><b>Notable Trends</b> <br> <br> According to the scatterplot above, the three regions with the most gun violence (Fifeville - Cherry Avenue, 10th & Page - Venable, and Ridge Street) all have median annual earnings around \$40,000. The only other regions with median annual earnings below \$40,000 are Rose Hill - Harris - Venable, Carr's Hill McCormick Road, JPA - Fontaine, and Old Ivy - Darden School. These blocks also house a significant portion of UVA students, who do not have any reportable annual earnings.</p>
@@ -1828,80 +1815,80 @@ The map below shows unemployment rates in our region. Each grey circle represent
 </details>
 
 ```{r unemployment_map}
-# gv_sf_summary %>%
-#   leaflet() %>%
-#   addProviderTiles(providers$CartoDB.Positron) %>% 
-#   addPolygons(group = "Unemployment Rate",
-#               stroke = TRUE, 
-#               weight = 0.5,
-#               opacity = 1,
-#               color = "black", 
-#               fillColor = ~ pal_pov(unemployment_rate),
-#               fillOpacity = 0.5,
-#               popup = paste0("Unemployment Rate: ", gv_sf_summary$unemployment_rate, "%", "<br>",
-#                              "Population: ", gv_sf_summary$pop_est, "<br>",
-#                              "Tract: ", gv_sf_summary$tract_name, ", ", gv_sf_summary$locality),
-#               highlightOptions = highlightOptions(
-#                 fillOpacity = 1,
-#                 bringToFront = FALSE
-#               )) %>%
-#   addLegend("bottomright",
-#             pal = pal_pov,
-#             values = ~ unemployment_rate, 
-#             title = "Unemployment Rates",
-#             labFormat = labelFormat(suffix = "%"), 
-#             opacity = 1) %>%
-#   addMarkers(data = gv, 
-#              lng = gv$lon,
-#              lat = gv$lat,
-#              popup = paste0("Description: ", gv$description, "<br>",
-#                             "Date: ", gv$reported_date, "<br>",
-#                             "Status: ", gv$verified),
-#              clusterOptions = markerClusterOptions(
-#                showCoverageOnHover = FALSE,
-#                iconCreateFunction=JS("function (cluster) {    
-#     var childCount = cluster.getChildCount();  
-#     if (childCount < 100) {  
-#       c = 'rgba(211,211,211);'
-#     } else if (childCount < 1000) {  
-#       c = 'rgba(211,211,211);'  
-#     } else { 
-#       c = 'rgb(211,211,211);'  
-#     }    
-#     return new L.DivIcon({ html: '<div style=\"background-color:'+c+'\"><span>' + childCount + '</span></div>', className: 'marker-cluster', iconSize: new L.Point(40, 40) });
-# 
-#   }")
-#              ))
+gv_sf_summary %>%
+  leaflet() %>%
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  addPolygons(group = "Unemployment Rate",
+              stroke = TRUE,
+              weight = 0.5,
+              opacity = 1,
+              color = "black",
+              fillColor = ~ pal_pov(unemployment_rate),
+              fillOpacity = 0.5,
+              popup = paste0("Unemployment Rate: ", gv_sf_summary$unemployment_rate, "%", "<br>",
+                             "Population: ", gv_sf_summary$pop_est, "<br>",
+                             "Tract: ", gv_sf_summary$tract_name, ", ", gv_sf_summary$locality),
+              highlightOptions = highlightOptions(
+                fillOpacity = 1,
+                bringToFront = FALSE
+              )) %>%
+  addLegend("bottomright",
+            pal = pal_pov,
+            values = ~ unemployment_rate,
+            title = "Unemployment Rates",
+            labFormat = labelFormat(suffix = "%"),
+            opacity = 1) %>%
+  addMarkers(data = gv,
+             lng = gv$lon,
+             lat = gv$lat,
+             popup = paste0("Description: ", gv$description, "<br>",
+                            "Date: ", gv$reported_date, "<br>",
+                            "Status: ", gv$verified),
+             clusterOptions = markerClusterOptions(
+               showCoverageOnHover = FALSE,
+               iconCreateFunction=JS("function (cluster) {
+    var childCount = cluster.getChildCount();
+    if (childCount < 100) {
+      c = 'rgba(211,211,211);'
+    } else if (childCount < 1000) {
+      c = 'rgba(211,211,211);'
+    } else {
+      c = 'rgb(211,211,211);'
+    }
+    return new L.DivIcon({ html: '<div style=\"background-color:'+c+'\"><span>' + childCount + '</span></div>', className: 'marker-cluster', iconSize: new L.Point(40, 40) });
+
+  }")
+             ))
 ```
 
 
 #### Scatterplot
 
 ```{r employment_scatter, fig.cap="Unemployment Rates Compared to Incidents of Gun Violence"}
-# scatter_text4 <- gv_sf_summary %>%
-#   filter(percent_incidents > 5 |
-#           unemployment_rate > 8)
-# 
-# gv_sf_summary %>%
-#   ggplot(aes(x = unemployment_rate, y = percent_incidents, size = pop_est, color = locality)) +
-#   geom_point(alpha = 0.8) +
-#   scale_size(range = c(.1, 12)) +
-#   geom_label_repel(data = scatter_text4,
-#                    aes(x = unemployment_rate, y = percent_incidents, label = tract_name), size = 3,
-#                    min.segment.length = unit(0, 'lines'),
-#                    inherit.aes = FALSE) +
-#   scale_color_manual(values = c("#007BAB", "#F8BE3D"), 
-#                    name = "Region") +
-#   scale_y_continuous(labels = function(x) paste0(x, "%")) +
-#   scale_x_continuous(labels = function(x) paste0(x, "%")) +
-#   labs(x = "Unemployment Rate",
-#        y = "Percentage of Total Gun Violence Incidents",
-#        title = "Unemployment Rate Compared to Incidents of Gun Violence",
-#        subtitle = "Each circle represents a different census tract",
-#        caption = "Years: 2018 - 2024",
-#        size = "Estimated Population") +
-#   guides(size = "none") +
-#   theme_minimal()
+scatter_text4 <- gv_sf_summary %>%
+  filter(percent_incidents > 5 |
+          unemployment_rate > 8)
+
+gv_sf_summary %>%
+  ggplot(aes(x = unemployment_rate, y = percent_incidents, size = pop_est, color = locality)) +
+  geom_point(alpha = 0.8) +
+  scale_size(range = c(.1, 12)) +
+  geom_label_repel(data = scatter_text4,
+                   aes(x = unemployment_rate, y = percent_incidents, label = tract_name), size = 3,
+                   min.segment.length = unit(0, 'lines'),
+                   inherit.aes = FALSE) +
+  scale_color_manual(values = c("#007BAB", "#F8BE3D"),
+                   name = "Region") +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  scale_x_continuous(labels = function(x) paste0(x, "%")) +
+  labs(x = "Unemployment Rate",
+       y = "Percentage of Total Gun Violence Incidents",
+       title = "Unemployment Rate Compared to Incidents of Gun Violence",
+       subtitle = "Each circle represents a different census tract",
+       caption = "Years: 2018 - 2024",
+       size = "Estimated Population") +
+  guides(size = "none") +
+  theme_minimal()
 ```
 
 <p class="comment"><b> Notable Trends</b> <br> <br> According to the scatterplot above, there is no strong relationship between unemployment rates and proportions of gun violence for each census tract. The two regions with the highest rates of unemployment, 10th & Page - Venable and Ridge St. - also have significantly high proportions of gun violence. Fifeville - Cherry Avenue, is a notable outlier: although it has some of the highest proportion of gun violence, the unemployment rate is only 1.3, below the regional median of 3.4. Commonwealth - Townwood - Berkmar and Carr's Hill McCormick Road also have higher rates of unemployment, but lower rates of gun violence.</p>
@@ -1922,35 +1909,33 @@ Recent estimates put the number of guns privately owned in the US around **392 m
 # Estimate the total number of 5 year concealed carry handgun permits 
 # Pull from https://www.vacourts.gov/courtadmin/aoc/djs/programs/cpss/csi/cc/home and manually added
 
-# yrs <- c(2022, 2023, 2024)
-# va <- c(109142, 117402, 110568)
-# cville <- c(153, 171, 181)
-# alb <- c(996, 1140, 1096)
-# ccs <- tibble(yr = c(2022, 2023, 2024),
-#               va = c(109142, 117402, 110568),
-#               cville = c(153, 171, 181),
-#               alb = c(996, 1140, 1096))
-# 
-# # Estimate
-# ccs_avg <- ccs %>%
-#   pivot_longer(cols = va:alb) %>%
-#   group_by(region = name) %>%
-#   summarise(yearly_avg = mean(value)) %>%
-#   mutate(five_yr_total = yearly_avg * 5)
-# 
-# va_est <- ccs_avg %>% filter(region == "va") %>% pluck('five_yr_total') %>% round()
-# cville_est <- ccs_avg %>% filter(region == "cville") %>% pluck('five_yr_total') %>% round()
-# alb_est <- ccs_avg %>% filter(region == "alb") %>% pluck('five_yr_total') %>% round()
+yrs <- c(2022, 2023, 2024)
+va <- c(109142, 117402, 110568)
+cville <- c(153, 171, 181)
+alb <- c(996, 1140, 1096)
+ccs <- tibble(yr = c(2022, 2023, 2024),
+              va = c(109142, 117402, 110568),
+              cville = c(153, 171, 181),
+              alb = c(996, 1140, 1096))
 
-# text to return to doc ----
-# According to [Virginia Circuit Court Caseload Reports](https://www.vacourts.gov/courtadmin/aoc/djs/programs/cpss/csi/cc/home), we estimate that there were approximately `r format(va_est, big.mark=",")` concealed carry handgun permits issued across the state, `r format(cville_est, big.mark = ",")` issued in Charlottesville, and `r format(alb_est, big_mark = ",")` issued in Albemarle County between 2020 - 2024.
+# Estimate
+ccs_avg <- ccs %>%
+  pivot_longer(cols = va:alb) %>%
+  group_by(region = name) %>%
+  summarise(yearly_avg = mean(value)) %>%
+  mutate(five_yr_total = yearly_avg * 5)
+
+va_est <- ccs_avg %>% filter(region == "va") %>% pluck('five_yr_total') %>% round()
+cville_est <- ccs_avg %>% filter(region == "cville") %>% pluck('five_yr_total') %>% round()
+alb_est <- ccs_avg %>% filter(region == "alb") %>% pluck('five_yr_total') %>% round()
+
 ```
 
 Because no license is required to purchase a firearm in Virginia, there is little information on the total number of individuals owning guns or average number of guns per household for Charlottesville and Albemarle. One way to approximate these numbers is to look at a subset of firearm owners: those that have permits for carrying a concealed firearm. [Qualified](https://law.lis.virginia.gov/vacode/18.2-308.09/) residents are able to apply for a 5-year concealed carry permit through their local circuit courts.[^24]
 
 [^24]: Virginia State Police. Resident Concealed Handgun Permits. <https://vsp.virginia.gov/services/firearms/resident-concealed-handgun-permits/>. Accessed February 7, 2025.
 
-<!-- return text here -->
+According to [Virginia Circuit Court Caseload Reports](https://www.vacourts.gov/courtadmin/aoc/djs/programs/cpss/csi/cc/home), we estimate that there were approximately `r format(va_est, big.mark=",")` concealed carry handgun permits issued across the state, `r format(cville_est, big.mark = ",")` issued in Charlottesville, and `r format(alb_est, big_mark = ",")` issued in Albemarle County between 2020 - 2024.
 
 <details>
 
@@ -1976,36 +1961,34 @@ This section explores two means of accessing guns in Charlottesville and Albemar
 
 ```{r atf_setup}
 # # Local dealers 
-# local_ffl <- read_csv("data/atf_local_licenses.csv")
-# 
-# # Albemarle map 
-# load(file = "data/alb_map.Rdata")
-# 
-# # Census shape data 
-# alb_sf <- dat %>% # dat from youth populations census section 
-#   st_union()
+local_ffl <- read_csv("cville-alb-gun-trauma/data/atf_local_licenses.csv")
 
-# text to return ----
-# The [Bureau of Alcohol, Tobacco, Firearms, and Explosives (ATF)](https://www.atf.gov/firearms) maintains a record of all federally licensed firearms dealers. Some of these dealers are widely frequented businesses, such as the Walmart on Route 29, while others are individuals that operate out of residential neighborhoods. The list and map below show the `r nrow(local_ffl)` authorized dealers in Charlottesville and Albemarle county as of January 2025.
+# Albemarle map
+load(file = "cville-alb-gun-trauma/data/alb_map.Rdata")
+
+# Census shape data
+alb_sf <- dat %>% # dat from youth populations census section
+  st_union()
+
 ```
 
-<!-- return text here -->
+The [Bureau of Alcohol, Tobacco, Firearms, and Explosives (ATF)](https://www.atf.gov/firearms) maintains a record of all federally licensed firearms dealers. Some of these dealers are widely frequented businesses, such as the Walmart on Route 29, while others are individuals that operate out of residential neighborhoods. The list and map below show the `r nrow(local_ffl)` authorized dealers in Charlottesville and Albemarle county as of January 2025.
 
 ::: {.panel-tabset}
 #### Map
 
 ```{r dealer_map, out.width="90%", fig.cap="Locations of Firearms Dealers in Charlottesville & Albemarle"}
-# ggmap(alb_map) +
-#   geom_sf(data = alb_sf, inherit.aes = FALSE, alpha = 0, linewidth = 0.75) +
-#   theme_void() +
-#   geom_point(local_ffl,
-#              mapping = aes(x = lon, y = lat, col = business_type, shape = business_type),
-#              size = 3) +
-#   scale_color_manual(name = "Business Type", values = c("#F8BE3D", "#007BAB")) +
-#   scale_shape_manual(name = "Business Type", values = c(17, 19)) +
-#   theme_void() +
-#   labs(title = "Locations of Firearms Dealers in Charlottesville & Albemarle",
-#        caption = "Total federally licensed dealers: 19")
+ggmap(alb_map) +
+  geom_sf(data = alb_sf, inherit.aes = FALSE, alpha = 0, linewidth = 0.75) +
+  theme_void() +
+  geom_point(local_ffl,
+             mapping = aes(x = lon, y = lat, col = business_type, shape = business_type),
+             size = 3) +
+  scale_color_manual(name = "Business Type", values = c("#F8BE3D", "#007BAB")) +
+  scale_shape_manual(name = "Business Type", values = c(17, 19)) +
+  theme_void() +
+  labs(title = "Locations of Firearms Dealers in Charlottesville & Albemarle",
+       caption = "Total federally licensed dealers: 19")
   
 ```
 
@@ -2028,22 +2011,22 @@ The type of license issued indicates if the seller is a dealer or manufacturer o
 -   **Type 10** - Manufacturer of Destructive Devices, Ammunition for Destructive Devices or Armor Piercing Ammunition
 
 ```{r dealer_list}
-# local_ffl %>%
-#   select(licensee_name = license_name, business_name, address = premise_street, type) %>%
-#   reactable(
-#     defaultColDef = colDef(
-#       header = function(value)
-#         str_to_title(gsub("_", " ", value, fixed = TRUE)),
-#       align = "left",
-#       headerStyle = list(background = "#f7f7f8")
-#     ),
-#     columns = list(
-#       type = colDef(minWidth = 40)
-#     ),
-#     bordered = TRUE,
-#     highlight = TRUE
-#   ) %>%
-#   reactablefmtr::add_source("List of all Federal Firearm License types: https://www.atf.gov/resource-center/fact-sheet/fact-sheet-federal-firearms-and-explosives-licenses-types", align = "right", font_size = 10, font_color = "grey")
+local_ffl %>%
+  select(licensee_name = license_name, business_name, address = premise_street, type) %>%
+  reactable(
+    defaultColDef = colDef(
+      header = function(value)
+        str_to_title(gsub("_", " ", value, fixed = TRUE)),
+      align = "left",
+      headerStyle = list(background = "#f7f7f8")
+    ),
+    columns = list(
+      type = colDef(minWidth = 40)
+    ),
+    bordered = TRUE,
+    highlight = TRUE
+  ) %>%
+  reactablefmtr::add_source("List of all Federal Firearm License types: https://www.atf.gov/resource-center/fact-sheet/fact-sheet-federal-firearms-and-explosives-licenses-types", align = "right", font_size = 10, font_color = "grey")
 ```
 
 <p align="right"><font size=1>Data Source: Bureau of Alcohol, Tobacco, Firearms, and Explosives</p></font>
@@ -2061,32 +2044,32 @@ The plot below shows the number of guns stolen from vehicles in Charlottesville 
 
 
 ```{r nibrs_theft, fig.cap="Theft of Firearms from Vehicles"}
-# nibrs_theft <- read_csv("data/nibrs_theft.csv") %>%
-#   filter(district != "Virginia") %>%
-#   mutate(district = factor(district)) %>%
-#   rename(Region = district)
-# 
-# labs <- nibrs_theft %>%
-#   filter(year != 2022)
-# 
-# ggplot(nibrs_theft, aes(year, n_stolen, colour = Region, linetype = Region)) +
-#   geom_line(linewidth = 2) +
-#   labs(x = NULL,
-#        y = "Number of Firearms Stolen",
-#        title = "Theft of Firearms from Vehicles") +
-#   scale_color_manual(values = c("#007BAB", "#B12A90FF")) +
-#   geom_label(data = labs, aes(label = n_stolen), show.legend = F, alpha = 1, fontface = "bold", size = 4) +
-#   annotate("label", x = 2022, y = 29, label = "30", color = "#B12A90FF", alpha = 1, fontface = "bold", size = 4) +
-#   annotate("label", x = 2022, y = 32, label = "31", color = "#007BAB", alpha = 1, fontface = "bold", size = 4) +
-#   scale_x_continuous(breaks = scales::pretty_breaks(n = 7), guide = guide_axis(angle = 35)) +
-#   scale_y_continuous(limits = c(0, 32)) +
-#   scale_linetype_manual(values=c("longdash", "1111")) +
-#   theme_minimal() +
-#   theme(legend.title = element_text(face = "bold"),
-#         axis.title = element_text(face = "bold"), 
-#         axis.text = element_text(size = 11),
-#         legend.margin = ggplot2::margin(t=1, unit = "pt"),
-#         legend.position = 'bottom')
+nibrs_theft <- read_csv("cville-alb-gun-trauma/data/nibrs_theft.csv") %>%
+  filter(district != "Virginia") %>%
+  mutate(district = factor(district)) %>%
+  rename(Region = district)
+
+labs <- nibrs_theft %>%
+  filter(year != 2022)
+
+ggplot(nibrs_theft, aes(year, n_stolen, colour = Region, linetype = Region)) +
+  geom_line(linewidth = 2) +
+  labs(x = NULL,
+       y = "Number of Firearms Stolen",
+       title = "Theft of Firearms from Vehicles") +
+  scale_color_manual(values = c("#007BAB", "#B12A90FF")) +
+  geom_label(data = labs, aes(label = n_stolen), show.legend = F, alpha = 1, fontface = "bold", size = 4) +
+  annotate("label", x = 2022, y = 29, label = "30", color = "#B12A90FF", alpha = 1, fontface = "bold", size = 4) +
+  annotate("label", x = 2022, y = 32, label = "31", color = "#007BAB", alpha = 1, fontface = "bold", size = 4) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 7), guide = guide_axis(angle = 35)) +
+  scale_y_continuous(limits = c(0, 32)) +
+  scale_linetype_manual(values=c("longdash", "1111")) +
+  theme_minimal() +
+  theme(legend.title = element_text(face = "bold"),
+        axis.title = element_text(face = "bold"),
+        axis.text = element_text(size = 11),
+        legend.margin = ggplot2::margin(t=1, unit = "pt"),
+        legend.position = 'bottom')
 ```
 
 <p class="comment"><b> Notable Trends</b> <br> <br> In general, the rate of firearms being stolen from vehicles has increased, with 48 guns being stolen from vehicles in 2023 in Charlottesville and Albemarle.</p>
