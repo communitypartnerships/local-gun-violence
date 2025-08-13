@@ -11,6 +11,7 @@ project:
     - "pdfs/"
 website:
   favicon: images/favicon.ico
+  google-analytics: "G-NC3N4JBHWD"
   open-graph: 
     image: images/ccp-image-card.png
   search: false
