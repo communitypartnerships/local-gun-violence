@@ -55,4 +55,4 @@ rsconnect/
 
 # other files
 .DS_Store
-data/
+data/raw/
