@@ -25,8 +25,9 @@ library(tidyverse)
 
 incidents <- read_excel("data/raw/cua/incidents_details20261026.xlsx") %>%
   clean_names() %>%
-  mutate(date = mdy(str_extract(incident_date_time, "^[A-Za-z]+ \\d{1,2}, \\d{4}"))) %>%
-  select(-incident_date_time) %>%
+  mutate(date = mdy(str_extract(incident_date_time, "^[A-Za-z]+ \\d{1,2}, \\d{4}")),
+         incident_id = str_remove(incident_number, "-")) %>%
+  select(-incident_date_time, -incident_number) %>%
   mutate(agency_name = str_to_title(agency_name),
          type = "incident")
 
